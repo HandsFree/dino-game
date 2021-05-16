@@ -2,7 +2,15 @@
 
 var dino = {
     x: 50,
-    y: 100
+    y: 100,
+    dirX: 0,
+    dirY: 0,
+    speed: 5
+}
+
+var tresureChest = {
+    chestX: 100,
+    chestY: 100
 }
 
 var canvas = document.createElement("canvas");
@@ -23,10 +31,39 @@ var keyclick = {};
 
 document.addEventListener("keydown", function (event) {
     keyclick[event.keyCode]=true;
-    console.log(keyclick);
+    move(keyclick);
+}, false);
+
+document.addEventListener("keyup", function (event) {
+    delete keyclick[event.keyCode];
 }, false);
 
 
+
+function move(keyclick) {
+
+    // side arrows
+    // towards right
+    if (39 in keyclick) {dino.x += dino.speed; dino.dirX = 0; dino.dirY = 0;}
+    // towards left
+    if (37 in keyclick) {dino.x -= dino.speed; dino.dirX = 150; dino.dirY = 0;}
+
+    //up and down arrows
+    //if (38 in keyclick) {dino.y -= dino.speed;dino.dirX = 8; dino.dirY = 190}
+
+    if (40 in keyclick) {dino.y += dino.speed;dino.dirX = 193; dino.dirY = 200}
+    
+
+    if (dino.x >= canvas.width) {dino.x = 0;}
+    if (dino.y >= canvas.height) {dino.y = 0;}
+
+    if (dino.x < 0) {dino.x = canvas.width;}
+    if (dino.y < 0) {dino.y = canvas.height;}
+
+
+
+    render();
+}
 
 function checkReady() {
    this.ready=true;
@@ -42,12 +79,17 @@ function playgame() {
 function render() {
     context.fillStyle="green";
     context.fillRect(0,0,canvas.width,canvas.height);
-    context.drawImage(mainImage,0,0,150,160,dino.x,dino.y,120,80);
-    context.drawImage(mainImage,150,0,150,160,400,200,120,80);
-    context.drawImage(mainImage,150,0,150,160,700,500,120,80);
-    context.font = "20px Verdana";
+
+    //context.drawImage(mainImage,100,150,500,200,200,200,260,280);
+    context.drawImage(mainImage,dino.dirX,dino.dirY,150,160,dino.x,dino.y,180,120);
+
+    //context.drawImage(mainImage,150,0,150,160,400,200,120,80);
+    //context.drawImage(mainImage,150,0,150,160,700,500,120,80);
     context.fillStyle = "black";
-    context.fillText("Directions: arrow keys to move", 400, 690);
+    context.font = "30px Verdana";
+    context.fillText("Dinosaur and Treasure Game!", 380, 30);
+    context.font = "20px Verdana";
+    context.fillText("Directions: arrow keys to move", 440, 690);
 }
 
     
