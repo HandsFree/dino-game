@@ -2,15 +2,22 @@
 
 var dino = {
     x: 50,
-    y: 100,
+    y: 300,
     dirX: 0,
     dirY: 0,
     speed: 5
 }
 
 var tresureChest = {
-    chestX: 100,
-    chestY: 100
+    chestX: 380,
+    chestY: 0,
+    dirChestX: 300,
+    dirChestY: 450
+
+}
+
+function myNum(n) {
+    return Math.floor(Math.random()*n);
 }
 
 var canvas = document.createElement("canvas");
@@ -26,6 +33,8 @@ mainImage = new Image();
 mainImage.ready = false;
 mainImage.onload = checkReady;
 mainImage.src = "RunSpritesSh1.png";
+
+
 
 var keyclick = {};
 
@@ -59,9 +68,7 @@ function move(keyclick) {
 
     if (dino.x < 0) {dino.x = canvas.width;}
     if (dino.y < 0) {dino.y = canvas.height;}
-
-
-
+    
     render();
 }
 
@@ -72,15 +79,33 @@ function checkReady() {
 
 function playgame() {
    render();
+   requestAnimationFrame(playgame);
 }
 
-
+if (tresureChest.chestY == 380) {
+    console.log('treasure');
+}
 
 function render() {
-    context.fillStyle="green";
-    context.fillRect(0,0,canvas.width,canvas.height);
 
-    //context.drawImage(mainImage,100,150,500,200,200,200,260,280);
+
+    var background = new Image();
+    background.src = "BG1.png";
+    background.onload = function(){
+    context.drawImage(background,0,0,canvas.width,canvas.height);     
+    }
+
+    
+    //context.fillStyle="green";
+    //context.fillRect(0,0,canvas.width,canvas.height);
+
+    
+
+    context.drawImage(mainImage,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+
+    //context.drawImage(mainImage,380,100,200,170,300,300,180,190);
+
+
     context.drawImage(mainImage,dino.dirX,dino.dirY,150,160,dino.x,dino.y,180,120);
 
     //context.drawImage(mainImage,150,0,150,160,400,200,120,80);
