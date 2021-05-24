@@ -12,8 +12,12 @@ var tresureChest = {
     chestX: 380,
     chestY: 0,
     dirChestX: 300,
-    dirChestY: 450
+    dirChestY: 450,
+}
 
+var dinoAni = function() {
+    context.drawImage(dinoFrames[frame],10,10);
+    frame = (frame+1) % frame.length;
 }
 
 function myNum(n) {
@@ -28,13 +32,10 @@ document.body.appendChild(canvas);
 canvas.width = 1200;
 canvas.height = 700;
 
-
 mainImage = new Image();
 mainImage.ready = false;
 mainImage.onload = checkReady;
 mainImage.src = "RunSpritesSh1.png";
-
-
 
 var keyclick = {};
 
@@ -52,14 +53,14 @@ document.addEventListener("keyup", function (event) {
 function move(keyclick) {
 
     // side arrows
+
     // towards right
     if (39 in keyclick) {dino.x += dino.speed; dino.dirX = 0; dino.dirY = 0;}
+
     // towards left
     if (37 in keyclick) {dino.x -= dino.speed; dino.dirX = 150; dino.dirY = 0;}
 
-    //up and down arrows
-    //if (38 in keyclick) {dino.y -= dino.speed;dino.dirX = 8; dino.dirY = 190}
-
+    //down arrow
     if (40 in keyclick) {dino.y += dino.speed;dino.dirX = 193; dino.dirY = 200}
     
 
@@ -82,12 +83,8 @@ function playgame() {
    requestAnimationFrame(playgame);
 }
 
-if (tresureChest.chestY == 380) {
-    console.log('treasure');
-}
 
 function render() {
-
 
     var background = new Image();
     background.src = "BG1.png";
@@ -95,21 +92,15 @@ function render() {
     context.drawImage(background,0,0,canvas.width,canvas.height);     
     }
 
-    
-    //context.fillStyle="green";
-    //context.fillRect(0,0,canvas.width,canvas.height);
-
-    
-
-    context.drawImage(mainImage,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
-
-    //context.drawImage(mainImage,380,100,200,170,300,300,180,190);
-
+    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
+        context.drawImage(mainImage,380,100,200,170,300,395,180,190);
+        
+    } else {
+       context.drawImage(mainImage,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+    }
 
     context.drawImage(mainImage,dino.dirX,dino.dirY,150,160,dino.x,dino.y,180,120);
 
-    //context.drawImage(mainImage,150,0,150,160,400,200,120,80);
-    //context.drawImage(mainImage,150,0,150,160,700,500,120,80);
     context.fillStyle = "black";
     context.font = "30px Verdana";
     context.fillText("Dinosaur and Treasure Game!", 380, 30);
