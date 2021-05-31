@@ -1,9 +1,13 @@
 const canvas = document.getElementById('canvas1');
+//var canvas = document.createElement("canvas");
 const ctx = canvas.getContext('2d');
+//document.body.appendChild(canvas);
 canvas.width = 1200;
 canvas.height = 700;
 
 const keys = [];
+
+var tc=false;
 
 const dino = {
     x: 100,
@@ -17,26 +21,22 @@ const dino = {
 };
 
 var tresureChest = {
+    ////////
+    //Dont Touch!//
     chestX: 0,
     chestY: 460,
-    chestOpenY: 550,
-    dirChestX: 300,
-    dirChestY: 450,
-    dirChestYopen: 390
+    //End//
+    ////////
+
+    dirChestX: 0,
+    dirChestY: 0,
 };
 
-/*
+
 function myNum(n) {
     return Math.floor(Math.random()*n);
-}
-*/
+};
 
-/*
-var canvas = document.createElement("canvas");
-var context = canvas.getContext("2d");
-
-document.body.appendChild(canvas);
-*/
 
 const sprites = new Image();
 sprites.src = "din-fin1.png";
@@ -113,16 +113,26 @@ function ani() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "darkgreen";
     ctx.font = "35px Comic Sans MS";
     ctx.fillText("Dinosaur and Treasure Game!", 380, 40);
+    ctx.fillStyle = "darkgreen";
     ctx.font = "25px Comic Sans MS";
     ctx.fillText("Directions: arrow keys to move", 440, 690);
 
     drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
 
+    if (!tc){
+        tresureChest.ghostNum = myNum(5)*64;
+        tresureChest.dirChestX = myNum(1100)+50;
+        tresureChest.dirChestY = myNum(400)+250;
+        tc=true;
+    }
+
+    //ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+
     if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
-        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestOpenY,240,300,tresureChest.dirChestX,tresureChest.dirChestYopen,220,320);
+        ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
