@@ -7,7 +7,9 @@ canvas.height = 700;
 
 const keys = [];
 
-var tc=false;
+var tc = false; // one tresure chest
+var start = false;
+
 
 const dino = {
     x: 100,
@@ -37,12 +39,18 @@ function myNum(n) {
     return Math.floor(Math.random()*n);
 };
 
+//starting the game image
+const startImage = new Image();
+startImage.src = "firstScreen.png";
 
+//background of the game
+const background = new Image();
+background.src = "BG1.png";
+
+//sprites
 const sprites = new Image();
 sprites.src = "din-fin1.png";
 
-const background = new Image();
-background.src = "BG1.png";
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
@@ -103,16 +111,30 @@ function startAnimating(fps) {
     ani();
 }
 
+
 function ani() {
     requestAnimationFrame(ani);
     now = Date.now();
     elapsed = now - then;
     if (elapsed > fpsInterval) {
         then = now - (elapsed % fpsInterval);
+   
 
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    
+
+    if (!start) {
+        ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
+        ctx.font = "35px Comic Sans MS";
+        ctx.fillStyle = "darkgreen";
+        ctx.fillText("Spacebar to Play!", 450, 680);
+
+        if (keys[32]) {
+            start=true;
+        }
+        
+    } else {
+
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
     ctx.fillStyle = "darkgreen";
     ctx.font = "35px Comic Sans MS";
     ctx.fillText("Dinosaur and Treasure Game!", 380, 40);
@@ -123,7 +145,7 @@ function ani() {
     drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
 
     if (!tc){
-        tresureChest.ghostNum = myNum(5)*64;
+        tresureChest.tcNum = myNum(5)*64;
         tresureChest.dirChestX = myNum(1100)+50;
         tresureChest.dirChestY = myNum(400)+250;
         tc=true;
@@ -131,21 +153,23 @@ function ani() {
 
     //ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
 
-    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
+   if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
     }
-
+    
     movePlayer();
     handlePlayerFrame();
 
     }
-
+  }
 }
 
 startAnimating(7);
+
+
 
 
 
