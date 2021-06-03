@@ -9,7 +9,8 @@ const keys = [];
 
 var tc = false; // one tresure chest
 var start = false;
-
+var end = true;
+//var startNewGame = false;
 
 const dino = {
     x: 100,
@@ -18,7 +19,7 @@ const dino = {
     height: 175,
     dirX: 0,
     dirY: 0,
-    speed: 10,
+    speed: 20,
     moving: false
 };
 
@@ -33,6 +34,12 @@ var tresureChest = {
     dirChestX: 0,
     dirChestY: 0,
 };
+
+function startAgain() {
+if (keys[32]){
+    console.log('space');
+}
+}
 
 
 function myNum(n) {
@@ -97,6 +104,7 @@ function movePlayer() {
     }
 }
 
+
 function handlePlayerFrame() {
     if (dino.dirX < 3 && dino.moving) dino.dirX++
     else dino.dirX = 0;
@@ -119,7 +127,6 @@ function ani() {
     if (elapsed > fpsInterval) {
         then = now - (elapsed % fpsInterval);
    
-
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
     if (!start) {
@@ -132,17 +139,22 @@ function ani() {
             start=true;
         }
         
-    } else {
+    } else {   
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
+
+    if (end) {
+
     ctx.fillStyle = "darkgreen";
     ctx.font = "35px Comic Sans MS";
     ctx.fillText("Dinosaur and Treasure Game!", 380, 40);
     ctx.fillStyle = "darkgreen";
     ctx.font = "25px Comic Sans MS";
-    ctx.fillText("Directions: arrow keys to move", 440, 690);
+    ctx.fillText("Directions: arrow keys to move", 390, 690);  
 
     drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
+
+    }//end
 
     if (!tc){
         tresureChest.tcNum = myNum(5)*64;
@@ -155,6 +167,19 @@ function ani() {
 
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
+    
+        ctx.fillStyle = "blue";
+        ctx.font = "140px Comic Sans MS";
+        ctx.fillText("Yay!", 450, 200);
+        ctx.font = "60px Comic Sans MS";
+        ctx.fillText("You have found the treasure!", 220, 300);
+        ctx.font = "50px Comic Sans MS";
+        ctx.fillText("Play Again?", 450, 500);
+
+        end = false;
+
+        startAgain();
+     
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
