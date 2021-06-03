@@ -36,11 +36,15 @@ var tresureChest = {
 };
 
 function startAgain() {
-if (keys[32]){
-    console.log('space');
+  if (keys[32]){
+      dino.x = 100;
+      dino.y = 250;
+      end=true;
+      tc=false;
+      randNumGen();
+    //console.log('space');
+  }
 }
-}
-
 
 function myNum(n) {
     return Math.floor(Math.random()*n);
@@ -119,6 +123,14 @@ function startAnimating(fps) {
     ani();
 }
 
+function randNumGen() {
+    if (!tc){
+        tresureChest.tcNum = myNum(5)*64;
+        tresureChest.dirChestX = myNum(1100)+50;
+        tresureChest.dirChestY = myNum(400)+250;
+        tc=true;
+    }
+}
 
 function ani() {
     requestAnimationFrame(ani);
@@ -156,12 +168,7 @@ function ani() {
 
     }//end
 
-    if (!tc){
-        tresureChest.tcNum = myNum(5)*64;
-        tresureChest.dirChestX = myNum(1100)+50;
-        tresureChest.dirChestY = myNum(400)+250;
-        tc=true;
-    }
+    randNumGen();
 
     //ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
 
@@ -174,7 +181,7 @@ function ani() {
         ctx.font = "60px Comic Sans MS";
         ctx.fillText("You have found the treasure!", 220, 300);
         ctx.font = "50px Comic Sans MS";
-        ctx.fillText("Play Again?", 450, 500);
+        ctx.fillText("Hit the Spacebar to Play Again!", 260, 400);
 
         end = false;
 
