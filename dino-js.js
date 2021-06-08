@@ -8,13 +8,8 @@ const keys = [];
 var tc = false; // one tresure chest
 var start = false;
 var end = true;
-
-/*const chact = [
-      [sprSt="sprites", x=100, y=250, width=175, height=175, dirX=0, dirY=0, speed=10, moving=false],
-      [sprSt="bears", x=100, y=250, width=175, height=215, dirX=0, dirY=0, speed=10, moving=false]
-];
-
-console.log(chact[1][0]);*/
+var din = true;
+var w = canvas.width / 2;
 
 
 const dino = {
@@ -29,16 +24,16 @@ const dino = {
 };
 
 
-/*const bear = {
+const bear = {
     x: 100,
     y: 250,
-    width: 175,
+    width: 165,
     height: 215,
     dirX: 0,
     dirY: 0,
-    speed: 10,
+    speed: 25,
     moving: false
-};*/
+};
 
 
 var tresureChest = {
@@ -53,17 +48,29 @@ var tresureChest = {
     dirChestY: 0,
 };
 
+function charaters() {
+    if(din) {
+         drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
+    } else {
+         drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
+    }
+};
+
 function startAgain() {
   if (keys[32]){
-      //bear.x = 100;
-      //bear.y = 250;
+      bear.x = 100;
+      bear.y = 250;
 
-      dino.x = 150;
-      dino.y = 350;
+      //charaters();
+
+      //dino.x = 150;
+      //dino.y = 350;
 
       end=true;
       tc=false;
+      din=false;
       randNumGen();
+      
     //console.log('space');
   }
 }
@@ -93,50 +100,28 @@ function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
 }
 
+
 window.addEventListener("keydown", function(e){
     keys[e.keyCode] = true;
+    if(din) {
     dino.moving = true;
+    } else {
+    bear.moving = true;    
+    }
 });
 
 window.addEventListener("keyup", function(e){
     delete keys[e.keyCode];
+    if(din) {
     dino.moving = false;
+    } else {
+    bear.moving = false;   
+    }
 });
 
-
-/*function movePlayer() {
- 
-    if (keys[38] && dino[0][2] > 220) {
-        dino[0][2] -= dino.speed;
-        dino[i].dirY = 0;
-        dino[i].moving = true;
-    }
-
-    
-    if (keys[37] && dino.x > 0) {
-        dino.x -= dino.speed;
-        dino.dirY = 1;
-        dino.moving = true;
-    }
-
-   
-   if (keys[40] && dino.y < (canvas.height+25) - dino.height) {
-        dino.y += dino.speed;
-        dino.dirY = 0;
-        dino.moving = true;
-    }
-
-    
-    if (keys[39] && dino.x < canvas.width - dino.width) {
-        dino.x += dino.speed;
-        dino.dirY = 0;
-        dino.moving = true;
-    }
-}*/
-
-
-
 function movePlayer() {
+
+    if(din) {
  
     if (keys[38] && dino.y > 220) {
         dino.y -= dino.speed;
@@ -164,13 +149,47 @@ function movePlayer() {
         dino.dirY = 0;
         dino.moving = true;
     }
+
+  } else {
+
+    if (keys[38] && bear.y > 220) {
+        bear.y -= bear.speed;
+        bear.dirY = 0;
+        bear.moving = true;
+    }
+
+    
+    if (keys[37] && bear.x > 0) {
+        bear.x -= bear.speed;
+        bear.dirY = 1;
+        bear.moving = true;
+    }
+
+   
+   if (keys[40] && bear.y < (canvas.height+25) - bear.height) {
+        bear.y += bear.speed;
+        bear.dirY = 0;
+        bear.moving = true;
+    }
+
+    
+    if (keys[39] && bear.x < canvas.width - bear.width) {
+        bear.x += bear.speed;
+        bear.dirY = 0;
+        bear.moving = true;
+    }
+
+  }
 }
 
-
-
 function handlePlayerFrame() {
-    if (dino.dirX < 3 && dino.moving) dino.dirX++
-    else dino.dirX = 0;
+    if(din) {
+       if (dino.dirX < 3 && dino.moving) dino.dirX++
+       else dino.dirX = 0;
+    } else {
+        if (bear.dirX <= 4 && bear.moving) bear.dirX++
+        else bear.dirX = 0;
+    }
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -202,8 +221,6 @@ function ani() {
 
     if (!start) {
 
-        var w = canvas.width / 2;
-
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
         ctx.fillStyle = "darkgreen";
@@ -220,20 +237,16 @@ function ani() {
 
     if (end) {
 
-    var w1 = canvas.width / 2;
-
     ctx.fillStyle = "darkgreen";
     ctx.textAlign = "center"; 
     ctx.font = "35px Comic Sans MS";
-    ctx.fillText("Treasure Game", w1, 40);
+    ctx.fillText("Treasure Game", w, 40);
     ctx.font = "25px Comic Sans MS";
-    ctx.fillText("With Dino and Friends!", w1, 70);
+    ctx.fillText("With Dino and Friends!", w, 70);
     ctx.font = "25px Comic Sans MS";
-    ctx.fillText("Directions: arrow keys to move", w1, 690);
- 
-    drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
-    //drawSprite(chact[0].sprSt, chact[0].width * chact[0].dirX, chact.height * chact.dirY, chact.width, chact.height, chact.x, chact.y, chact.width, chact.height);
-    //drawSprite(chact[0][0], chact[0][3] * chact[0][5], chact[0][4] * chact[0][6], chact[0][3], chact[0][4], chact[0][1], chact[0][2], chact[0][3], chact[0][4]);
+    ctx.fillText("Directions: arrow keys to move", w, 690);
+
+    charaters();
 
     }//end
 
@@ -241,36 +254,54 @@ function ani() {
 
     //ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
 
+   if (din) {
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
-
-        var w2 = canvas.width / 2;
-
+ 
+        
         ctx.fillStyle = "blue";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
-        ctx.fillText("Yay!", w2, 200);
+        ctx.fillText("Yay!", w, 200);
         ctx.font = "60px Comic Sans MS";
-        ctx.fillText("You have found the treasure!", w2, 300);
+        ctx.fillText("You have found the treasure!", w, 300);
         ctx.font = "50px Comic Sans MS";
-        ctx.fillText("Hit the Spacebar to Play Again!", w2, 400);
+        ctx.fillText("Hit the Spacebar to Play Again!", w, 400);
 
         end = false;
 
-        startAgain();
-     
+        startAgain();   
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
     }
     
+} else {
+    if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
+        ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
+
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center"; 
+        ctx.font = "140px Comic Sans MS";
+        ctx.fillText("Yay!", w, 200);
+        ctx.font = "60px Comic Sans MS";
+        ctx.fillText("You have found the treasure Again!", w, 300);
+        ctx.font = "50px Comic Sans MS";
+        ctx.fillText("Well Done!", w, 400); 
+        ctx.fillText("Thanks for Playing!", w, 500);
+
+        end = false;
+
+} else {
+    ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+ }
+
+}
     movePlayer();
     handlePlayerFrame();
-
     }
   }
 }
-
 startAnimating(7);
 
 
