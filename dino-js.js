@@ -9,6 +9,7 @@ var tc = false; // one tresure chest
 var start = false;
 var end = true;
 var din = true;
+var gameEnd = true;
 var w = canvas.width / 2;
 
 
@@ -56,15 +57,23 @@ function charaters() {
     }
 };
 
+// return to splash screen
+function retToMain() {
+    if (keys[13]) {
+        dino.x = 100,
+        dino.y = 250,
+        end=true;
+        tc=false;
+        din=true;
+        gameEnd=false;
+    }
+}
+
+// level 2
 function startAgain() {
   if (keys[32]){
       bear.x = 100;
       bear.y = 250;
-
-      //charaters();
-
-      //dino.x = 150;
-      //dino.y = 350;
 
       end=true;
       tc=false;
@@ -187,7 +196,7 @@ function handlePlayerFrame() {
        if (dino.dirX < 3 && dino.moving) dino.dirX++
        else dino.dirX = 0;
     } else {
-        if (bear.dirX <= 4 && bear.moving) bear.dirX++
+        if (bear.dirX < 5 && bear.moving) bear.dirX++
         else bear.dirX = 0;
     }
 }
@@ -219,21 +228,26 @@ function ani() {
    
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
-    if (!start) {
+    if (!start || !gameEnd) {
+
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
         ctx.fillStyle = "darkgreen";
         ctx.textAlign = "center"; 
-        ctx.fillText("Spacebar to Play!", w, 680);
+        ctx.fillText("Spacebar to help Dino find the Treasure!", w, 680);
+        
 
         if (keys[32]) {
             start=true;
+            gameEnd=true;
         }
+        
         
     } else {   
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
+    
 
     if (end) {
 
@@ -259,14 +273,17 @@ function ani() {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
  
         
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
         ctx.fillText("Yay!", w, 200);
+        ctx.fillStyle = "blue";
         ctx.font = "60px Comic Sans MS";
-        ctx.fillText("You have found the treasure!", w, 300);
+        ctx.fillText("Dino and you have found the treasure!", w, 300);
         ctx.font = "50px Comic Sans MS";
-        ctx.fillText("Hit the Spacebar to Play Again!", w, 400);
+        ctx.fillStyle = "purple";
+        ctx.fillText("Hit the Spacebar to help Billy Bear", w, 400);
+        ctx.fillText("find the Treasure Chest!", w, 500);
 
         end = false;
 
@@ -285,12 +302,19 @@ function ani() {
         ctx.font = "140px Comic Sans MS";
         ctx.fillText("Yay!", w, 200);
         ctx.font = "60px Comic Sans MS";
-        ctx.fillText("You have found the treasure Again!", w, 300);
+        ctx.fillStyle = "blue";
+        ctx.fillText("Billy Bear and You have", w, 300);
+        ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
-        ctx.fillText("Well Done!", w, 400); 
+        ctx.fillStyle = "yellow";
         ctx.fillText("Thanks for Playing!", w, 500);
+        ctx.fillStyle = "purple";
+        ctx.fillText("Hit the Enter Key to Play Again!", w, 600);
 
         end = false;
+
+        retToMain();
+
 
 } else {
     ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
