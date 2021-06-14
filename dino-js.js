@@ -10,7 +10,9 @@ var start = false;
 var end = true;
 var din = true;
 var gameEnd = true;
+var textGo = false;
 var w = canvas.width / 2;
+
 
 
 const dino = {
@@ -67,6 +69,22 @@ function retToMain() {
         din=true;
         gameEnd=false;
     }
+}
+
+function playIns() {
+        ctx.fillStyle = "white";
+        ctx.fillRect(150, 100, 900, 450);   
+        ctx.fillStyle = "purple";
+        ctx.textAlign = "center"; 
+        ctx.font = "45px Comic Sans MS";
+        ctx.fillText("To play, move the arrow keys", w, 200);
+        ctx.fillText("to where Dino is looking for the treasure!", w, 300);
+        ctx.fillText("Good Luck!", w, 400);
+        ctx.fillStyle = "red";
+        ctx.fillText("Hit the Spacebar to Play!", w, 500);
+        if (keys[32]) {
+            textGo=true;
+        }
 }
 
 // level 2
@@ -230,7 +248,6 @@ function ani() {
 
     if (!start || !gameEnd) {
 
-
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
         ctx.fillStyle = "darkgreen";
@@ -242,14 +259,18 @@ function ani() {
             start=true;
             gameEnd=true;
         }
-        
-        
+          
     } else {   
 
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
-    
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);  
+ 
+    if (!textGo) {
 
-    if (end) {
+    playIns();
+
+    } else {
+    
+      if (end) { 
 
     ctx.fillStyle = "darkgreen";
     ctx.textAlign = "center"; 
@@ -266,13 +287,12 @@ function ani() {
 
     randNumGen();
 
-    //ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
-
    if (din) {
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
  
-        
+        ctx.fillStyle = "white";
+        ctx.fillRect(50, 30, 1100, 550);
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
@@ -297,6 +317,8 @@ function ani() {
     if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
+        ctx.fillStyle = "white";
+        ctx.fillRect(120, 40, 950, 600);
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
@@ -321,6 +343,11 @@ function ani() {
  }
 
 }
+
+    }///textGo
+
+
+
     movePlayer();
     handlePlayerFrame();
     }
