@@ -8,13 +8,23 @@ const keys = [];
 var tc = false; // one tresure chest
 var start = false;
 var end = true;
+
+//animals
 var din = true;
+var billyBear = false;
+var lion = false;
+
 var gameEnd = true;
 var textGo = false;
+
+//levels
+var levels = false;
+
+
+//center text
 var w = canvas.width / 2;
 
-
-
+//animals objects
 const dino = {
     x: 100,
     y: 250,
@@ -25,7 +35,6 @@ const dino = {
     speed: 20,
     moving: false
 };
-
 
 const bear = {
     x: 100,
@@ -38,6 +47,17 @@ const bear = {
     moving: false
 };
 
+const lion2 = {
+    x: 100,
+    y: 250,
+    width: 250,
+    height: 170,
+    dirX: 0,
+    dirY: 0,
+    speed: 25,
+    moving: false
+};
+// end of animals objects
 
 var tresureChest = {
     ////////
@@ -54,8 +74,16 @@ var tresureChest = {
 function charaters() {
     if(din) {
          drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
-    } else {
-         drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
+         levels=true;
+    }
+
+    if(billyBear) {
+    drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
+         levels=false;
+    }
+
+    if(lion) {
+        drawSprite(li1, lion2.width * lion2.dirX, lion2.height * lion2.dirY, lion2.width, lion2.height, lion2.x, lion2.y, lion2.width, lion2.height);
     }
 };
 
@@ -68,12 +96,16 @@ function retToMain() {
         tc=false;
         din=true;
         gameEnd=false;
+        billyBear=false;
+        lion=false;
     }
 }
 
 function playIns() {
         ctx.fillStyle = "white";
-        ctx.fillRect(150, 100, 900, 450);   
+        ctx.globalAlpha = 0.6;  
+        ctx.fillRect(150, 100, 900, 450); 
+        ctx.globalAlpha = 1.0;
         ctx.fillStyle = "purple";
         ctx.textAlign = "center"; 
         ctx.font = "45px Comic Sans MS";
@@ -82,45 +114,71 @@ function playIns() {
         ctx.fillText("Good Luck!", w, 400);
         ctx.fillStyle = "red";
         ctx.fillText("Hit the Spacebar to Play!", w, 500);
+        levels=true;
         if (keys[32]) {
             textGo=true;
         }
 }
 
 // level 2
-function startAgain() {
+function level2() {
   if (keys[32]){
-      bear.x = 100;
-      bear.y = 250;
-
+      billyBear=true;
+      bear.x = 50;
+      bear.y = 350;
       end=true;
       tc=false;
       din=false;
+      lion=false;
       randNumGen();
-      
-    //console.log('space');
   }
 }
+
+// level 3
+function level3() {
+    if (keys[32]){
+        lion2.x = 100;
+        lion2.y = 250;
+        end=true;
+        tc=false;
+        billyBear=false;
+        din=false;
+        lion=true;
+        randNumGen();
+    }
+  }
 
 function myNum(n) {
     return Math.floor(Math.random()*n);
 };
 
-//starting the game image
+//start screen
 const startImage = new Image();
-startImage.src = "firstScreen.png";
+startImage.src = "levels/firstScreen.png";
 
-//background of the game
+//Level 1 background
 const background = new Image();
-background.src = "BG1.png";
+background.src = "levels/lev1.png";
+
+//Level 2 background
+const background1 = new Image();
+background1.src = "levels/lev3.png";
+
+//Level 3 background
+//const background2 = new Image();
+//background2.src = "levels/lev3.png";
 
 //dino
 const sprites = new Image();
-sprites.src = "din-fin1.png";
+sprites.src = "sprites/din-fin1.png";
 
 //bear
 const bears = new Image();
-bears.src = "bears-sheet.png";
+bears.src = "sprites/bears-sheet.png";
+
+//lion
+const li1 = new Image();
+li1.src = "sprites/lennyLion.png";
 
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
@@ -131,20 +189,30 @@ function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
 window.addEventListener("keydown", function(e){
     keys[e.keyCode] = true;
     if(din) {
-    dino.moving = true;
-    } else {
-    bear.moving = true;    
+       dino.moving = true;
+    }
+    if(billyBear) {
+        bear.moving = true;    
+    }
+    if(lion) {
+        lion2.moving = true; 
     }
 });
 
 window.addEventListener("keyup", function(e){
     delete keys[e.keyCode];
     if(din) {
-    dino.moving = false;
-    } else {
-    bear.moving = false;   
+        dino.moving = false;
+    }
+    if(billyBear) {
+        bear.moving = false;   
+    }
+    if(lion) {
+        lion2.moving = false;   
     }
 });
+
+
 
 function movePlayer() {
 
@@ -177,7 +245,9 @@ function movePlayer() {
         dino.moving = true;
     }
 
-  } else {
+  } 
+
+  if (billyBear) {
 
     if (keys[38] && bear.y > 220) {
         bear.y -= bear.speed;
@@ -207,15 +277,55 @@ function movePlayer() {
     }
 
   }
+
+
+  if (lion) {
+
+    if (keys[38] && lion2.y > 220) {
+        lion2.y -= lion2.speed;
+        lion2.dirY = 0;
+        lion2.moving = true;
+    }
+
+    
+    if (keys[37] && lion2.x > 0) {
+        lion2.x -= lion2.speed;
+        lion2.dirY = 1;
+        lion2.moving = true;
+    }
+
+   
+   if (keys[40] && lion2.y < (canvas.height+25) - lion2.height) {
+        lion2.y += lion2.speed;
+        lion2.dirY = 0;
+        lion2.moving = true;
+    }
+
+    
+    if (keys[39] && lion2.x < canvas.width - lion2.width) {
+        lion2.x += lion2.speed;
+        lion2.dirY = 0;
+        lion2.moving = true;
+    }
+
+  }
+
 }
 
 function handlePlayerFrame() {
     if(din) {
        if (dino.dirX < 3 && dino.moving) dino.dirX++
        else dino.dirX = 0;
-    } else {
+    } 
+    
+    if(billyBear) {
         if (bear.dirX < 5 && bear.moving) bear.dirX++
         else bear.dirX = 0;
+    }
+
+    if(lion) {
+        if (lion2.dirX < 1 && lion2.moving) lion2.dirX++
+        else lion2.dirX = 0;
     }
 }
 
@@ -252,17 +362,24 @@ function ani() {
         ctx.font = "35px Comic Sans MS";
         ctx.fillStyle = "darkgreen";
         ctx.textAlign = "center"; 
-        ctx.fillText("Spacebar to help Dino find the Treasure!", w, 680);
-        
+        ctx.fillText("Spacebar to help Dino find the Treasure!", w, 680);     
 
         if (keys[32]) {
             start=true;
             gameEnd=true;
         }
           
-    } else {   
+    } else { 
+        
 
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);  
+
+    if (levels) {
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        levels = false;
+    } else {
+        ctx.drawImage(background1, 0, 0, canvas.width, canvas.height);
+    }
+
  
     if (!textGo) {
 
@@ -272,7 +389,7 @@ function ani() {
     
       if (end) { 
 
-    ctx.fillStyle = "darkgreen";
+    ctx.fillStyle = "red";
     ctx.textAlign = "center"; 
     ctx.font = "35px Comic Sans MS";
     ctx.fillText("Treasure Game", w, 40);
@@ -292,7 +409,9 @@ function ani() {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
  
         ctx.fillStyle = "white";
+        ctx.globalAlpha = 0.6; 
         ctx.fillRect(50, 30, 1100, 550);
+        ctx.globalAlpha = 1.0; 
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
@@ -307,18 +426,21 @@ function ani() {
 
         end = false;
 
-        startAgain();   
+        level2();
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
     }
     
-} else {
+}
+    if (billyBear) {
     if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
         ctx.fillStyle = "white";
+        ctx.globalAlpha = 0.6; 
         ctx.fillRect(120, 40, 950, 600);
+        ctx.globalAlpha = 1.0; 
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
@@ -328,7 +450,40 @@ function ani() {
         ctx.fillText("Billy Bear and You have", w, 300);
         ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "red";
+        ctx.fillText("Thanks for Playing!", w, 500);
+        ctx.fillStyle = "purple";
+        ctx.fillText("Hit the Enter Key to Play Again!", w, 600);
+
+        end = false;
+
+        level3();
+
+
+} else {
+    ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+ }
+
+}
+
+if (lion) {
+    if (lion2.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (lion2.x+140) && lion2.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (lion2.y+140)) {
+        ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
+
+        ctx.fillStyle = "white";
+        ctx.globalAlpha = 0.6; 
+        ctx.fillRect(120, 40, 950, 600);
+        ctx.globalAlpha = 1.0; 
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center"; 
+        ctx.font = "140px Comic Sans MS";
+        ctx.fillText("Yay!", w, 200);
+        ctx.font = "60px Comic Sans MS";
+        ctx.fillStyle = "blue";
+        ctx.fillText("Leo the Lion and You have", w, 300);
+        ctx.fillText("found the treasure!", w, 400);
+        ctx.font = "50px Comic Sans MS";
+        ctx.fillStyle = "red";
         ctx.fillText("Thanks for Playing!", w, 500);
         ctx.fillStyle = "purple";
         ctx.fillText("Hit the Enter Key to Play Again!", w, 600);
@@ -343,6 +498,10 @@ function ani() {
  }
 
 }
+
+
+
+
 
     }///textGo
 
