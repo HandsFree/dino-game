@@ -71,6 +71,10 @@ var tresureChest = {
     dirChestY: 0,
 };
 
+var roarSd = new Audio("sounds/T-Rex1.mp3");
+var billySd = new Audio("sounds/bear_Sd.mp3");
+var lion_Sd = new Audio("sounds/lion_Sd.mp3");
+
 function charaters() {
     if(din) {
          drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
@@ -102,6 +106,7 @@ function retToMain() {
 }
 
 function playIns() {
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
         ctx.fillRect(150, 100, 900, 450); 
@@ -109,8 +114,8 @@ function playIns() {
         ctx.fillStyle = "purple";
         ctx.textAlign = "center"; 
         ctx.font = "45px Comic Sans MS";
-        ctx.fillText("To play, move the arrow keys", w, 200);
-        ctx.fillText("to where Dino is looking for the treasure!", w, 300);
+        ctx.fillText("Dino is looking for the treasure!", w, 200);
+        ctx.fillText("Move the arrow keys to look around", w, 300);
         ctx.fillText("Good Luck!", w, 400);
         ctx.fillStyle = "red";
         ctx.fillText("Hit the Spacebar to Play!", w, 500);
@@ -362,7 +367,7 @@ function ani() {
         ctx.font = "35px Comic Sans MS";
         ctx.fillStyle = "darkgreen";
         ctx.textAlign = "center"; 
-        ctx.fillText("Spacebar to help Dino find the Treasure!", w, 680);     
+        ctx.fillText("Hit on the Spacebar to continue!", w, 680);
 
         if (keys[32]) {
             start=true;
@@ -370,24 +375,20 @@ function ani() {
         }
           
     } else { 
-        
-
 
     if (levels) {
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        levels = false;
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);    
     } else {
         ctx.drawImage(background1, 0, 0, canvas.width, canvas.height);
     }
 
- 
     if (!textGo) {
 
     playIns();
 
     } else {
     
-      if (end) { 
+    if (end) { 
 
     ctx.fillStyle = "red";
     ctx.textAlign = "center"; 
@@ -396,7 +397,7 @@ function ani() {
     ctx.font = "25px Comic Sans MS";
     ctx.fillText("With Dino and Friends!", w, 70);
     ctx.font = "25px Comic Sans MS";
-    ctx.fillText("Directions: arrow keys to move", w, 690);
+    ctx.fillText("Directions: arrow keys to move around", w, 690);
 
     charaters();
 
@@ -408,6 +409,7 @@ function ani() {
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
  
+        roarSd.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
         ctx.fillRect(50, 30, 1100, 550);
@@ -418,10 +420,10 @@ function ani() {
         ctx.fillText("Yay!", w, 200);
         ctx.fillStyle = "blue";
         ctx.font = "60px Comic Sans MS";
-        ctx.fillText("Dino and you have found the treasure!", w, 300);
+        ctx.fillText("You and Dino have found the treasure!", w, 300);
         ctx.font = "50px Comic Sans MS";
         ctx.fillStyle = "purple";
-        ctx.fillText("Hit the Spacebar to help Billy Bear", w, 400);
+        ctx.fillText("Hit on the Spacebar to help Billy Bear", w, 400);
         ctx.fillText("find the Treasure Chest!", w, 500);
 
         end = false;
@@ -437,9 +439,10 @@ function ani() {
     if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
+        billySd.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
-        ctx.fillRect(120, 40, 950, 600);
+        ctx.fillRect(100, 50, 1000, 600);
         ctx.globalAlpha = 1.0; 
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
@@ -447,13 +450,12 @@ function ani() {
         ctx.fillText("Yay!", w, 200);
         ctx.font = "60px Comic Sans MS";
         ctx.fillStyle = "blue";
-        ctx.fillText("Billy Bear and You have", w, 300);
+        ctx.fillText("You and Billy Bear have", w, 300);
         ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
-        ctx.fillStyle = "red";
-        ctx.fillText("Thanks for Playing!", w, 500);
         ctx.fillStyle = "purple";
-        ctx.fillText("Hit the Enter Key to Play Again!", w, 600);
+        ctx.fillText("Hit on the Spacebar to help Leo the Lion", w, 500);
+        ctx.fillText("find the Treasure Chest!", w, 600);
 
         end = false;
 
@@ -470,6 +472,7 @@ if (lion) {
     if (lion2.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (lion2.x+140) && lion2.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (lion2.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
+        lion_Sd.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
         ctx.fillRect(120, 40, 950, 600);
@@ -480,18 +483,17 @@ if (lion) {
         ctx.fillText("Yay!", w, 200);
         ctx.font = "60px Comic Sans MS";
         ctx.fillStyle = "blue";
-        ctx.fillText("Leo the Lion and You have", w, 300);
+        ctx.fillText("You and Leo the Lion have", w, 300);
         ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
         ctx.fillStyle = "red";
         ctx.fillText("Thanks for Playing!", w, 500);
         ctx.fillStyle = "purple";
-        ctx.fillText("Hit the Enter Key to Play Again!", w, 600);
+        ctx.fillText("Hit on the Enter Key to Play Again!", w, 600);
 
         end = false;
 
         retToMain();
-
 
 } else {
     ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
@@ -499,13 +501,7 @@ if (lion) {
 
 }
 
-
-
-
-
-    }///textGo
-
-
+}///textGo
 
     movePlayer();
     handlePlayerFrame();
