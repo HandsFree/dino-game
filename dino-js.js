@@ -74,19 +74,23 @@ var tresureChest = {
 var roarSd = new Audio("sounds/T-Rex1.mp3");
 var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
+var music = new Audio("sounds/bensound-ukulele.mp3");
 
 function charaters() {
     if(din) {
-         drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
-         levels=true;
+        music.play();
+        drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
+        levels=true;
     }
 
     if(billyBear) {
-    drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
-         levels=false;
+        music.play();
+        drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
+        levels=false;
     }
 
     if(lion) {
+        music.play();
         drawSprite(li1, lion2.width * lion2.dirX, lion2.height * lion2.dirY, lion2.width, lion2.height, lion2.x, lion2.y, lion2.width, lion2.height);
     }
 };
@@ -409,6 +413,7 @@ function ani() {
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
  
+        music.pause();
         roarSd.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
@@ -439,6 +444,7 @@ function ani() {
     if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
+        music.pause();
         billySd.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
@@ -472,6 +478,7 @@ if (lion) {
     if (lion2.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (lion2.x+140) && lion2.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (lion2.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
+        music.pause();
         lion_Sd.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
