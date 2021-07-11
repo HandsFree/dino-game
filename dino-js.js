@@ -71,6 +71,10 @@ var tresureChest = {
     dirChestY: 0,
 };
 
+var startScTx = new Audio("sounds/startScTx.mp3");
+var startScMsc = new Audio("sounds/startScMsc.mp3");
+
+var ins = new Audio("sounds/ins.mp3");
 var roarSd = new Audio("sounds/T-Rex1.mp3");
 var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
@@ -111,6 +115,7 @@ function retToMain() {
 
 function playIns() {
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
+        ins.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
         ctx.fillRect(150, 100, 900, 450); 
@@ -122,10 +127,12 @@ function playIns() {
         ctx.fillText("Move the arrow keys to look around", w, 300);
         ctx.fillText("Good Luck!", w, 400);
         ctx.fillStyle = "red";
-        ctx.fillText("Hit the Spacebar to Play!", w, 500);
+        ctx.fillText("Press the Spacebar to Play!", w, 500);
         levels=true;
         if (keys[32]) {
             textGo=true;
+            startScMsc.pause();
+            ins.pause()
         }
 }
 
@@ -369,13 +376,22 @@ function ani() {
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
+
+        startScMsc.play();
+        startScMsc.volume = 0.1;
+
+        startScTx.play();
+        startScTx.volume = 1;
+
         ctx.fillStyle = "darkgreen";
         ctx.textAlign = "center"; 
-        ctx.fillText("Hit on the Spacebar to continue!", w, 680);
+        ctx.fillText("Press the Spacebar to continue!", w, 680);
+        
 
         if (keys[32]) {
             start=true;
             gameEnd=true;
+            startScTx.pause();
         }
           
     } else { 
