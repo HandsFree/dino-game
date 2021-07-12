@@ -10,6 +10,7 @@ var start = false;
 var end = true;
 
 //animals
+var vol = true;
 var din = true;
 var billyBear = false;
 var lion = false;
@@ -71,6 +72,13 @@ var tresureChest = {
     dirChestY: 0,
 };
 
+
+
+
+
+
+
+
 var startScTx = new Audio("sounds/startScTx.mp3");
 var startScMsc = new Audio("sounds/startScMsc.mp3");
 
@@ -79,6 +87,18 @@ var roarSd = new Audio("sounds/T-Rex1.mp3");
 var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
 var music = new Audio("sounds/bensound-ukulele.mp3");
+
+
+
+
+
+
+
+
+
+
+
+
 
 function charaters() {
     if(din) {
@@ -132,7 +152,7 @@ function playIns() {
         if (keys[32]) {
             textGo=true;
             startScMsc.pause();
-            ins.pause()
+            ins.pause();
         }
 }
 
@@ -376,7 +396,7 @@ function ani() {
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
-
+ 
         startScMsc.play();
         startScMsc.volume = 0.1;
 
@@ -384,15 +404,26 @@ function ani() {
         startScTx.volume = 1;
 
         ctx.fillStyle = "darkgreen";
-        ctx.textAlign = "center"; 
-        ctx.fillText("Press the Spacebar to continue!", w, 680);
+        ctx.textAlign = "center";
+
+        if (vol) {
         
+        ctx.fillText("Press the Spacebar for Sound!", w, 680);   
+
+        if (keys[32]) {
+           vol = false;         
+        }
+
+        } else {
+
+        ctx.fillText("Press the Spacebar to continue!", w, 680);  
 
         if (keys[32]) {
             start=true;
             gameEnd=true;
             startScTx.pause();
         }
+    }
           
     } else { 
 
