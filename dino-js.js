@@ -73,30 +73,18 @@ var tresureChest = {
 };
 
 
-
-
-
-
-
-
 var startScTx = new Audio("sounds/startScTx.mp3");
 var startScMsc = new Audio("sounds/startScMsc.mp3");
+
+var dinoCon = new Audio("sounds/dinoCon.mp3");
+var billyCon = new Audio("sounds/billyCon.mp3");
+var leoCon = new Audio("sounds/leoCon.mp3");
 
 var ins = new Audio("sounds/ins.mp3");
 var roarSd = new Audio("sounds/T-Rex1.mp3");
 var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
 var music = new Audio("sounds/bensound-ukulele.mp3");
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -396,12 +384,9 @@ function ani() {
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
- 
-        startScMsc.play();
-        startScMsc.volume = 0.1;
 
-        startScTx.play();
-        startScTx.volume = 1;
+        startScMsc.pause();
+        startScTx.pause();
 
         ctx.fillStyle = "darkgreen";
         ctx.textAlign = "center";
@@ -411,12 +396,16 @@ function ani() {
         ctx.fillText("Press the Spacebar for Sound!", w, 680);   
 
         if (keys[32]) {
-           vol = false;         
+           vol = false; 
         }
 
         } else {
 
-        ctx.fillText("Press the Spacebar to continue!", w, 680);  
+        ctx.fillText("Press the Spacebar to continue!", w, 680);
+        startScMsc.play();
+        startScMsc.volume = 0.1;
+        startScTx.play();
+        startScTx.volume = 1;
 
         if (keys[32]) {
             start=true;
@@ -457,11 +446,14 @@ function ani() {
     randNumGen();
 
    if (din) {
+    startScMsc.pause();
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
- 
+      
         music.pause();
         roarSd.play();
+        roarSd.volume = 0.5;
+        dinoCon.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
         ctx.fillRect(50, 30, 1100, 550);
@@ -469,13 +461,14 @@ function ani() {
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
-        ctx.fillText("Yay!", w, 200);
+        //ctx.fillText("Yay!", w, 200);
+        ctx.fillText("Well Done!", w, 200);
         ctx.fillStyle = "blue";
         ctx.font = "60px Comic Sans MS";
         ctx.fillText("You and Dino have found the treasure!", w, 300);
         ctx.font = "50px Comic Sans MS";
         ctx.fillStyle = "purple";
-        ctx.fillText("Hit on the Spacebar to help Billy Bear", w, 400);
+        ctx.fillText("Press the Spacebar to help Billy Bear", w, 400);
         ctx.fillText("find the Treasure Chest!", w, 500);
 
         end = false;
@@ -493,6 +486,9 @@ function ani() {
 
         music.pause();
         billySd.play();
+        billySd.volume = 0.3;
+        billyCon.play();
+
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
         ctx.fillRect(100, 50, 1000, 600);
@@ -500,14 +496,15 @@ function ani() {
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
-        ctx.fillText("Yay!", w, 200);
+        //ctx.fillText("Yay!", w, 200);
+        ctx.fillText("Well Done!", w, 200);
         ctx.font = "60px Comic Sans MS";
         ctx.fillStyle = "blue";
         ctx.fillText("You and Billy Bear have", w, 300);
         ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
         ctx.fillStyle = "purple";
-        ctx.fillText("Hit on the Spacebar to help Leo the Lion", w, 500);
+        ctx.fillText("Press the Spacebar to help Leo the Lion", w, 500);
         ctx.fillText("find the Treasure Chest!", w, 600);
 
         end = false;
@@ -527,6 +524,8 @@ if (lion) {
 
         music.pause();
         lion_Sd.play();
+        lion_Sd.volume = 0.3;
+        leoCon.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
         ctx.fillRect(120, 40, 950, 600);
@@ -534,7 +533,7 @@ if (lion) {
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
-        ctx.fillText("Yay!", w, 200);
+        ctx.fillText("Well Done!", w, 200);
         ctx.font = "60px Comic Sans MS";
         ctx.fillStyle = "blue";
         ctx.fillText("You and Leo the Lion have", w, 300);
@@ -543,7 +542,7 @@ if (lion) {
         ctx.fillStyle = "red";
         ctx.fillText("Thanks for Playing!", w, 500);
         ctx.fillStyle = "purple";
-        ctx.fillText("Hit on the Enter Key to Play Again!", w, 600);
+        ctx.fillText("Press the Enter Key to Play Again!", w, 600);
 
         end = false;
 
