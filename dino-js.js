@@ -19,8 +19,10 @@ var gameEnd = true;
 var textGo = false;
 
 //levels
-var levels = false;
-
+var levels1 = true;
+var levels2 = false;
+var levels3 = false;
+var levels4 = false;
 
 //center text
 var w = canvas.width / 2;
@@ -52,7 +54,7 @@ const lion2 = {
     x: 100,
     y: 250,
     width: 250,
-    height: 170,
+    height: 160,
     dirX: 0,
     dirY: 0,
     speed: 25,
@@ -92,13 +94,11 @@ function charaters() {
     if(din) {
         music.play();
         drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
-        levels=true;
     }
 
     if(billyBear) {
         music.play();
         drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
-        levels=false;
     }
 
     if(lion) {
@@ -118,11 +118,15 @@ function retToMain() {
         gameEnd=false;
         billyBear=false;
         lion=false;
+        levels1=true;
+        levels2=false;
+        levels3=false;
     }
 }
 
 function playIns() {
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height); 
+        leoCon.pause();
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height); 
         ins.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
@@ -136,13 +140,26 @@ function playIns() {
         ctx.fillText("Good Luck!", w, 400);
         ctx.fillStyle = "red";
         ctx.fillText("Press the Spacebar to Play!", w, 500);
-        levels=true;
+
         if (keys[32]) {
             textGo=true;
             startScMsc.pause();
             ins.pause();
         }
 }
+
+// level 1
+function level1() {
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center"; 
+    ctx.font = "35px Comic Sans MS";
+    ctx.fillText("Treasure Game", w, 40);
+    ctx.font = "25px Comic Sans MS";
+    ctx.fillText("With Dino and Friends!", w, 70);
+    ctx.font = "25px Comic Sans MS";
+    ctx.fillText("Directions: arrow keys to move around", w, 690);
+}
+
 
 // level 2
 function level2() {
@@ -154,6 +171,9 @@ function level2() {
       tc=false;
       din=false;
       lion=false;
+      levels1=false;
+      levels2=true;
+      levels3=false;
       randNumGen();
   }
 }
@@ -162,12 +182,15 @@ function level2() {
 function level3() {
     if (keys[32]){
         lion2.x = 100;
-        lion2.y = 250;
+        lion2.y = 450;
         end=true;
         tc=false;
         billyBear=false;
         din=false;
         lion=true;
+        levels1=false;
+        levels2=false;
+        levels3=true;
         randNumGen();
     }
   }
@@ -181,16 +204,16 @@ const startImage = new Image();
 startImage.src = "levels/firstScreen.png";
 
 //Level 1 background
-const background = new Image();
-background.src = "levels/lev1.png";
+const lev1 = new Image();
+lev1.src = "levels/lev1.png";
 
 //Level 2 background
-const background1 = new Image();
-background1.src = "levels/lev3.png";
+const lev2 = new Image();
+lev2.src = "levels/lev2.jpg";
 
 //Level 3 background
-//const background2 = new Image();
-//background2.src = "levels/lev3.png";
+const lev3 = new Image();
+lev3.src = "levels/lev3.png";
 
 //dino
 const sprites = new Image();
@@ -365,8 +388,8 @@ function startAnimating(fps) {
 function randNumGen() {
     if (!tc){
         tresureChest.tcNum = myNum(5)*64;
-        tresureChest.dirChestX = myNum(1100)+50;
-        tresureChest.dirChestY = myNum(400)+250;
+        tresureChest.dirChestX = myNum(900);
+        tresureChest.dirChestY = myNum(400)+150;
         tc=true;
     }
 }
@@ -385,6 +408,7 @@ function ani() {
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "35px Comic Sans MS";
 
+        leoCon.pause();
         startScMsc.pause();
         startScTx.pause();
 
@@ -402,6 +426,7 @@ function ani() {
         } else {
 
         ctx.fillText("Press the Spacebar to continue!", w, 680);
+        leoCon.pause();
         startScMsc.play();
         startScMsc.volume = 0.1;
         startScTx.play();
@@ -416,10 +441,15 @@ function ani() {
           
     } else { 
 
-    if (levels) {
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);    
-    } else {
-        ctx.drawImage(background1, 0, 0, canvas.width, canvas.height);
+
+    if (levels1) {
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);    
+    }
+    if (levels2) {
+        ctx.drawImage(lev2, 0, 0, canvas.width, canvas.height);
+    }
+    if (levels3) {
+        ctx.drawImage(lev3, 0, 0, canvas.width, canvas.height);
     }
 
     if (!textGo) {
@@ -430,14 +460,7 @@ function ani() {
     
     if (end) { 
 
-    ctx.fillStyle = "red";
-    ctx.textAlign = "center"; 
-    ctx.font = "35px Comic Sans MS";
-    ctx.fillText("Treasure Game", w, 40);
-    ctx.font = "25px Comic Sans MS";
-    ctx.fillText("With Dino and Friends!", w, 70);
-    ctx.font = "25px Comic Sans MS";
-    ctx.fillText("Directions: arrow keys to move around", w, 690);
+    level1();
 
     charaters();
 
@@ -461,7 +484,6 @@ function ani() {
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
-        //ctx.fillText("Yay!", w, 200);
         ctx.fillText("Well Done!", w, 200);
         ctx.fillStyle = "blue";
         ctx.font = "60px Comic Sans MS";
@@ -481,6 +503,7 @@ function ani() {
     
 }
     if (billyBear) {
+        dinoCon.pause();
     if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
@@ -496,7 +519,6 @@ function ani() {
         ctx.fillStyle = "red";
         ctx.textAlign = "center"; 
         ctx.font = "140px Comic Sans MS";
-        //ctx.fillText("Yay!", w, 200);
         ctx.fillText("Well Done!", w, 200);
         ctx.font = "60px Comic Sans MS";
         ctx.fillStyle = "blue";
@@ -519,6 +541,7 @@ function ani() {
 }
 
 if (lion) {
+    billyCon.pause();
     if (lion2.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (lion2.x+140) && lion2.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (lion2.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
