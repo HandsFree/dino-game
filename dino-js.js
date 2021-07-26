@@ -196,7 +196,9 @@ function level3() {
   }
 
 function myNum(n) {
-    return Math.floor(Math.random()*n);
+    return Math.floor(Math.random()*n + 300);
+    //Math.random() * 360 - 180
+
 };
 
 //start screen
@@ -385,14 +387,24 @@ function startAnimating(fps) {
     ani();
 }
 
+
+
+
+
 function randNumGen() {
     if (!tc){
         tresureChest.tcNum = myNum(5)*64;
-        tresureChest.dirChestX = myNum(900);
-        tresureChest.dirChestY = myNum(400)+150;
+        tresureChest.dirChestX = myNum(700);
+        //tresureChest.dirChestY = myNum(400)+150;
+        tresureChest.dirChestY = myNum(350);
         tc=true;
     }
 }
+
+
+
+
+
 
 function ani() {
     requestAnimationFrame(ani);
