@@ -88,7 +88,13 @@ var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
 var music = new Audio("sounds/bensound-ukulele.mp3");
 
-
+function settings() {
+    ctx.fillStyle = "black";
+    ctx.font = "15px Arial";
+    ctx.drawImage(cog, 5, 5);
+    ctx.fillText("Settings", 30, 70);
+    ctx.fillText("Press S", 30, 90);
+}
 
 function charaters() {
     if(din) {
@@ -126,7 +132,10 @@ function retToMain() {
 
 function playIns() {
         leoCon.pause();
-        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height); 
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+
+        settings();
+
         ins.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
@@ -150,6 +159,7 @@ function playIns() {
 
 // level 1
 function level1() {
+    settings();
     ctx.fillStyle = "red";
     ctx.textAlign = "center"; 
     ctx.font = "35px Comic Sans MS";
@@ -164,6 +174,7 @@ function level1() {
 // level 2
 function level2() {
   if (keys[32]){
+      settings();
       billyBear=true;
       bear.x = 50;
       bear.y = 350;
@@ -181,6 +192,7 @@ function level2() {
 // level 3
 function level3() {
     if (keys[32]){
+        settings();
         lion2.x = 100;
         lion2.y = 450;
         end=true;
@@ -228,6 +240,10 @@ bears.src = "sprites/bears-sheet.png";
 //lion
 const li1 = new Image();
 li1.src = "sprites/lennyLion.png";
+
+// Settings
+const cog = new Image();
+cog.src = "cog.png";
 
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
@@ -418,6 +434,9 @@ function ani() {
     if (!start || !gameEnd) {
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
+
+        settings();
+
         ctx.font = "35px Comic Sans MS";
 
         leoCon.pause();
