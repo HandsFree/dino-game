@@ -88,12 +88,42 @@ var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
 var music = new Audio("sounds/bensound-ukulele.mp3");
 
+var togMenu=false;
+
 function settings() {
     ctx.fillStyle = "black";
-    ctx.font = "15px Arial";
+    ctx.textAlign = "center";
+    ctx.font = "bold 15px Arial";
     ctx.drawImage(cog, 5, 5);
     ctx.fillText("Settings", 30, 70);
     ctx.fillText("Press S", 30, 90);
+
+    if (keys[83]) { //s
+        togMenu=true;
+        showMenu();
+    }
+}
+
+function showMenu() {
+    togMenu=true;
+    ctx.fillStyle = "black";
+    ctx.globalAlpha = 0.9; 
+    ctx.fillRect(120, 40, 950, 600);
+    ctx.globalAlpha = 1.0; 
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center"; 
+    ctx.font = "45px Arial";
+    ctx.fillText("Settings", w, 100);
+    ctx.font = "35px Arial";
+    ctx.fillText("Music: On or Off", w, 300);
+    ctx.fillText("Background: Picture or Colour", w, 400); 
+    ctx.font = "30px Arial";
+    ctx.fillText("Return to Game", w, 570);
+    ctx.fillText("Press A", w, 620);
+
+    if (keys[65]) { //s
+        togMenu=false;
+    }
 }
 
 function charaters() {
@@ -134,7 +164,7 @@ function playIns() {
         leoCon.pause();
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
 
-        settings();
+        //settings();
 
         ins.play();
         ctx.fillStyle = "white";
@@ -159,7 +189,7 @@ function playIns() {
 
 // level 1
 function level1() {
-    settings();
+    //settings();
     ctx.fillStyle = "red";
     ctx.textAlign = "center"; 
     ctx.font = "35px Comic Sans MS";
@@ -174,7 +204,7 @@ function level1() {
 // level 2
 function level2() {
   if (keys[32]){
-      settings();
+      //settings();
       billyBear=true;
       bear.x = 50;
       bear.y = 350;
@@ -192,7 +222,7 @@ function level2() {
 // level 3
 function level3() {
     if (keys[32]){
-        settings();
+       // settings();
         lion2.x = 100;
         lion2.y = 450;
         end=true;
@@ -436,6 +466,9 @@ function ani() {
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
 
         settings();
+        if (togMenu) {
+            showMenu();
+        }
 
         ctx.font = "35px Comic Sans MS";
 
