@@ -74,7 +74,6 @@ var tresureChest = {
     dirChestY: 0,
 };
 
-
 var startScTx = new Audio("sounds/startScTx.mp3");
 var startScMsc = new Audio("sounds/startScMsc.mp3");
 
@@ -88,17 +87,19 @@ var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
 var music = new Audio("sounds/bensound-ukulele.mp3");
 
+var togSet=true;
 var togMenu=false;
 
 function settings() {
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.font = "bold 15px Arial";
-    ctx.drawImage(cog, 5, 5);
-    ctx.fillText("Settings", 30, 70);
-    ctx.fillText("Press S", 30, 90);
+    ctx.drawImage(cog, 10, 5);
+    ctx.fillText("Settings", 35, 70);
+    ctx.fillText("Press S", 35, 90);
 
     if (keys[83]) { //s
+        togSet=false;
         togMenu=true;
         showMenu();
     }
@@ -106,6 +107,7 @@ function settings() {
 
 function showMenu() {
     togMenu=true;
+    togSet=false;
     ctx.fillStyle = "black";
     ctx.globalAlpha = 0.9; 
     ctx.fillRect(120, 40, 950, 600);
@@ -115,13 +117,14 @@ function showMenu() {
     ctx.font = "45px Arial";
     ctx.fillText("Settings", w, 100);
     ctx.font = "35px Arial";
-    ctx.fillText("Music: On or Off", w, 300);
-    ctx.fillText("Background: Picture or Colour", w, 400); 
+    ctx.fillText("Music: On or Off", w, 250);
+    ctx.fillText("Background: Picture or Colour", w, 350); 
     ctx.font = "30px Arial";
-    ctx.fillText("Return to Game", w, 570);
-    ctx.fillText("Press A", w, 620);
+    ctx.fillText("Return to Game", w, 560);
+    ctx.fillText("Press A", w, 610);
 
-    if (keys[65]) { //s
+    if (keys[65]) { //a
+        togSet=true;
         togMenu=false;
     }
 }
@@ -164,8 +167,6 @@ function playIns() {
         leoCon.pause();
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
 
-        //settings();
-
         ins.play();
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
@@ -184,12 +185,12 @@ function playIns() {
             textGo=true;
             startScMsc.pause();
             ins.pause();
+            ins.currentTime = 0;
         }
 }
 
 // level 1
 function level1() {
-    //settings();
     ctx.fillStyle = "red";
     ctx.textAlign = "center"; 
     ctx.font = "35px Comic Sans MS";
@@ -200,11 +201,9 @@ function level1() {
     ctx.fillText("Directions: arrow keys to move around", w, 690);
 }
 
-
 // level 2
 function level2() {
   if (keys[32]){
-      //settings();
       billyBear=true;
       bear.x = 50;
       bear.y = 350;
@@ -222,7 +221,6 @@ function level2() {
 // level 3
 function level3() {
     if (keys[32]){
-       // settings();
         lion2.x = 100;
         lion2.y = 450;
         end=true;
@@ -239,8 +237,6 @@ function level3() {
 
 function myNum(n) {
     return Math.floor(Math.random()*n + 300);
-    //Math.random() * 360 - 180
-
 };
 
 //start screen
@@ -306,8 +302,6 @@ window.addEventListener("keyup", function(e){
         lion2.moving = false;   
     }
 });
-
-
 
 function movePlayer() {
 
@@ -434,22 +428,14 @@ function startAnimating(fps) {
 }
 
 
-
-
-
 function randNumGen() {
     if (!tc){
         tresureChest.tcNum = myNum(5)*64;
         tresureChest.dirChestX = myNum(700);
-        //tresureChest.dirChestY = myNum(400)+150;
         tresureChest.dirChestY = myNum(350);
         tc=true;
     }
 }
-
-
-
-
 
 
 function ani() {
@@ -465,7 +451,10 @@ function ani() {
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
 
-        settings();
+        if (togSet) {
+            settings();
+        }
+
         if (togMenu) {
             showMenu();
         }
@@ -491,6 +480,7 @@ function ani() {
 
         ctx.fillText("Press the Spacebar to continue!", w, 680);
         leoCon.pause();
+        leoCon.currentTime = 0;
         startScMsc.play();
         startScMsc.volume = 0.1;
         startScTx.play();
@@ -500,6 +490,7 @@ function ani() {
             start=true;
             gameEnd=true;
             startScTx.pause();
+            startScTx.currentTime = 0;
         }
     }
           
@@ -568,6 +559,7 @@ function ani() {
 }
     if (billyBear) {
         dinoCon.pause();
+        dinoCon.currentTime = 0;
     if (bear.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (bear.x+140) && bear.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (bear.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
@@ -606,6 +598,7 @@ function ani() {
 
 if (lion) {
     billyCon.pause();
+    billyCon.currentTime = 0;
     if (lion2.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (lion2.x+140) && lion2.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (lion2.y+140)) {
         ctx.drawImage(sprites,tresureChest.chestX,(tresureChest.chestY+90),240,300,tresureChest.dirChestX,(tresureChest.dirChestY-60),220,320);
 
