@@ -203,7 +203,10 @@ function retToMain() {
 
 function playIns() {
         leoCon.pause();
+
+        if (picOn) {
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        }
 
         if (soundOn) {
         ins.play();
@@ -544,13 +547,19 @@ function ani() {
 
 
     if (levels1) {
-        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);    
+        if (picOn) {
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        }    
     }
     if (levels2) {
+        if (picOn) {
         ctx.drawImage(lev2, 0, 0, canvas.width, canvas.height);
+        }
     }
     if (levels3) {
+        if (picOn) {
         ctx.drawImage(lev3, 0, 0, canvas.width, canvas.height);
+        }
     }
 
     if (!textGo) {
