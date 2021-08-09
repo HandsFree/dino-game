@@ -105,7 +105,9 @@ function settings() {
     }
 }
 
-soundOn=true;
+
+speechOn=true;
+musicOn=true;
 picOn=true;
 
 function showMenu() {
@@ -120,32 +122,49 @@ function showMenu() {
     ctx.font = "45px Arial";
     ctx.fillText("Settings", w, 100);
     ctx.font = "35px Arial";
-    
-    if (soundOn) {
-        ctx.fillText("Music/Speech: On - press O to change", w, 250);
+
+    if (speechOn) {
+        ctx.fillText("Speech: On - press O to change", w, 210);
         if (keys[79]) { //o
-            soundOn=false;
+            speechOn=false;
         }
     }
 
-    if (!soundOn) {
-        ctx.fillText("Music/Speech: Off - press f to change", w, 250);
-        if (keys[70]) { //f
-            soundOn=true;
+    if (!speechOn) {
+        ctx.fillText("Speech: Off - press B to change", w, 210);
+        if (keys[66]) { //b
+            speechOn=true;
+        }
+    }
+
+    /*------------------------------------------------------ */
+
+    
+    if (musicOn) {
+        ctx.fillText("Music: On - press M to change", w, 310);
+        if (keys[77]) { //m
+            musicOn=false;
+        }
+    }
+
+    if (!musicOn) {
+        ctx.fillText("Music: Off - press U to change", w, 310);
+        if (keys[85]) { //u
+            musicOn=true;
         }
     }
 
     /*------------------------------------------------------ */
 
     if (picOn) {
-        ctx.fillText("Picture: On - press C to change", w, 350);
+        ctx.fillText("Picture: On - press C to change", w, 410);
         if (keys[67]) { //o
             picOn=false;
         }
     }
 
     if (!picOn) {
-        ctx.fillText("Colour: On - press I to change", w, 350);
+        ctx.fillText("Colour: On - press I to change", w, 410);
         if (keys[73]) { //f
             picOn=true;
         }
@@ -161,23 +180,25 @@ function showMenu() {
     }
 }
 
+
+
 function charaters() {
     if(din) {
-        if (soundOn) {
+        if (musicOn) {
         music.play();
         }
         drawSprite(sprites, dino.width * dino.dirX, dino.height * dino.dirY, dino.width, dino.height, dino.x, dino.y, dino.width, dino.height);
     }
 
     if(billyBear) {
-        if (soundOn) {
+        if (musicOn) {
         music.play();
         }
         drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
     }
 
     if(lion) {
-        if (soundOn) {
+        if (musicOn) {
         music.play();
         }
         drawSprite(li1, lion2.width * lion2.dirX, lion2.height * lion2.dirY, lion2.width, lion2.height, lion2.x, lion2.y, lion2.width, lion2.height);
@@ -208,7 +229,7 @@ function playIns() {
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
         }
 
-        if (soundOn) {
+        if (speechOn) {
         ins.play();
         }
 
@@ -527,9 +548,11 @@ function ani() {
         leoCon.currentTime = 0;
 
 
-        if (soundOn) {
+        if (musicOn) {
         startScMsc.play();
         startScMsc.volume = 0.1;
+        }
+        if (speechOn) {
         startScTx.play();
         startScTx.volume = 1;
         }
@@ -586,7 +609,7 @@ function ani() {
         music.pause();
 
 
-        if (soundOn) {
+        if (speechOn) {
         roarSd.play();
         roarSd.volume = 0.5;
         dinoCon.play();
@@ -626,7 +649,7 @@ function ani() {
 
         music.pause();
 
-        if (soundOn) {
+        if (speechOn) {
         billySd.play();
         billySd.volume = 0.3;
         billyCon.play();
@@ -668,7 +691,7 @@ if (lion) {
 
         music.pause();
 
-        if (soundOn) {
+        if (speechOn) {
         lion_Sd.play();
         lion_Sd.volume = 0.3;
         leoCon.play();
