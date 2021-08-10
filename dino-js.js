@@ -1,9 +1,16 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = 1200;
-canvas.height = 700;
+canvas.height = 735;
 
 const keys = [];
+
+var gameInsHt1 = 10;
+
+var gameInsHt = 40;
+var gameHt = canvas.height - gameInsHt;
+var gameInsWd = canvas.width;
+var gameInsCol = "darkgreen";
 
 var tc = false; // one tresure chest
 var start = false;
@@ -256,14 +263,20 @@ function playIns() {
 
 // level 1
 function level1() {
-    ctx.fillStyle = "red";
-    ctx.textAlign = "center"; 
-    ctx.font = "35px Comic Sans MS";
-    ctx.fillText("Treasure Game", w, 40);
-    ctx.font = "25px Comic Sans MS";
-    ctx.fillText("With Dino and Friends!", w, 70);
-    ctx.font = "25px Comic Sans MS";
-    ctx.fillText("Directions: arrow keys to move around", w, 690);
+      // game instructions
+      ctx.fillStyle = gameInsCol;
+      ctx.fillRect(0, 0, canvas.width, 80);
+      ctx.font = "40px Comic Sans MS";
+      ctx.fillStyle = "white";
+      ctx.fillText("Treasure Game", w, 40);
+      ctx.font = "25px Comic Sans MS";
+      ctx.fillText("With Dino and Friends!", w, 70);
+
+      ctx.fillStyle = gameInsCol;
+      ctx.fillRect(0, canvas.height - gameInsHt, gameInsWd, gameInsHt);
+      ctx.font = "25px Comic Sans MS";
+      ctx.fillStyle = "white";
+      ctx.fillText("Directions: arrow keys to move around", w, 725)
 }
 
 // level 2
@@ -386,7 +399,7 @@ function movePlayer() {
     }
 
    
-   if (keys[40] && dino.y < (canvas.height+25) - dino.height) {
+   if (keys[40] && dino.y < gameHt - dino.height) {
         dino.y += dino.speed;
         dino.dirY = 0;
         dino.moving = true;
@@ -417,7 +430,7 @@ function movePlayer() {
     }
 
    
-   if (keys[40] && bear.y < (canvas.height+25) - bear.height) {
+   if (keys[40] && bear.y < gameHt - bear.height) {
         bear.y += bear.speed;
         bear.dirY = 0;
         bear.moving = true;
@@ -449,7 +462,7 @@ function movePlayer() {
     }
 
    
-   if (keys[40] && lion2.y < (canvas.height+25) - lion2.height) {
+   if (keys[40] && lion2.y < gameHt - lion2.height) {
         lion2.y += lion2.speed;
         lion2.dirY = 0;
         lion2.moving = true;
@@ -497,13 +510,14 @@ function randNumGen() {
     if (!tc){
         tresureChest.tcNum = myNum(5)*64;
         tresureChest.dirChestX = myNum(700);
-        tresureChest.dirChestY = myNum(350);
+        tresureChest.dirChestY = myNum(350) - gameInsHt-40;
         tc=true;
     }
 }
 
 
 function ani() {
+
     requestAnimationFrame(ani);
     now = Date.now();
     elapsed = now - then;
@@ -515,6 +529,8 @@ function ani() {
     if (!start || !gameEnd) {
 
         ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
+
+      
 
         if (togSet) {
             settings();
