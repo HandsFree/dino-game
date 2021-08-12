@@ -271,7 +271,6 @@ function level1() {
       ctx.fillText("Treasure Game", w, 40);
       ctx.font = "25px Comic Sans MS";
       ctx.fillText("With Dino and Friends!", w, 70);
-
       ctx.fillStyle = gameInsCol;
       ctx.fillRect(0, canvas.height - gameInsHt, gameInsWd, gameInsHt);
       ctx.font = "25px Comic Sans MS";
@@ -348,6 +347,46 @@ li1.src = "sprites/lennyLion.png";
 // Settings
 const cog = new Image();
 cog.src = "cog.png";
+
+// Banannas
+const ban = new Image();
+ban.src = "bananna.png";
+
+var noOfBanannas = 8;
+var ban1 = [];
+        
+for (var g=0; g<noOfBanannas; g++) {
+     var a = Math.floor(Math.random()*canvas.width);
+     var b = Math.floor(Math.random()*canvas.height);
+     ban1[g] = new banannas1(a,b);
+}
+              
+function banannas1(x,y) {
+    this.a = a;
+    this.b = b;
+
+    this.fall = function() {
+
+
+        var dir = Math.floor(Math.random()*3);
+        if (dir==1) {
+            this.a = this.a-10;
+        }
+
+        if (dir==2) {
+            this.a = this.a+10;
+        }
+
+        this.b = this.b+8;
+        if (this.b > canvas.height) {
+            this.b = 0;
+        }
+    }
+
+    this.show = function() {
+        ctx.drawImage(ban, this.a, this.b, 90, 90);
+        }
+}
 
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
@@ -528,9 +567,7 @@ function ani() {
 
     if (!start || !gameEnd) {
 
-        ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);
-
-      
+        ctx.drawImage(startImage, 0, 0, canvas.width, canvas.height);   
 
         if (togSet) {
             settings();
@@ -588,6 +625,12 @@ function ani() {
     if (levels1) {
         if (picOn) {
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+
+       /* for (var v=0; v<noOfBanannas; v++)
+        {
+            ban1[v].show();
+        }*/
+
         }    
     }
     if (levels2) {
@@ -654,6 +697,21 @@ function ani() {
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+
+
+
+       // Banannas! ------------------------------------------------- //
+
+       for (var v=0; v<noOfBanannas; v++)
+       {
+           ban1[v].show();
+           ban1[v].fall();
+       }
+
+       ///////////////////////////////////////////////////////////////////
+
+
+
     }
     
 }
