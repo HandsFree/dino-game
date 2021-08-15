@@ -3,6 +3,9 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1200;
 canvas.height = 735;
 
+var fallDown = true;
+var bearOn = true;
+
 const keys = [];
 
 var gameInsHt1 = 10;
@@ -201,7 +204,9 @@ function charaters() {
         if (musicOn) {
         music.play();
         }
+        if (bearOn) {
         drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
+        }
     }
 
     if(lion) {
@@ -348,45 +353,98 @@ li1.src = "sprites/lennyLion.png";
 const cog = new Image();
 cog.src = "cog.png";
 
+
+
+
+
 // Banannas
 const ban = new Image();
 ban.src = "bananna.png";
 
-var noOfBanannas = 8;
+var noOfBanannas = 5;
 var ban1 = [];
         
-for (var g=0; g<noOfBanannas; g++) {
-     var a = Math.floor(Math.random()*canvas.width);
-     var b = Math.floor(Math.random()*canvas.height);
-     ban1[g] = new banannas1(a,b);
+for (var i=0; i<noOfBanannas; i++) {
+     var x = Math.floor(Math.random()*canvas.width);
+     var y = Math.floor(Math.random()*canvas.height);
+     ban1[i] = new banannas1(x,y);
 }
               
 function banannas1(x,y) {
-    this.a = a;
-    this.b = b;
+    this.x = x;
+    this.y = y;
+
 
     this.fall = function() {
-
-
+        if (fallDown) {
         var dir = Math.floor(Math.random()*3);
         if (dir==1) {
-            this.a = this.a-10;
+            this.x = this.x-10;
         }
 
         if (dir==2) {
-            this.a = this.a+10;
+            this.x = this.x+10;
         }
 
-        this.b = this.b+8;
-        if (this.b > canvas.height) {
-            this.b = 0;
+        this.y = this.y+8;
+        if (this.y > canvas.height) {
+            this.y = 0;
         }
+
+        if (!fallDown){
+        return;
     }
+}
+} 
 
     this.show = function() {
-        ctx.drawImage(ban, this.a, this.b, 90, 90);
+        if (bear.x <= (this.x+80) && this.x <= (bear.x+80) && bear.y <= (this.y+80) && this.y <= (bear.y+80)) {
+
+            fallDown=false;
+            bearOn=false;
+            ctx.fillStyle = "white";
+            ctx.globalAlpha = 0.6; 
+            ctx.fillRect(100, 90, 1000, 600);
+            ctx.globalAlpha = 1.0; 
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center"; 
+            ctx.font = "140px Comic Sans MS";
+            ctx.fillText("Oh No!", w, 210);
+            ctx.font = "60px Comic Sans MS";
+            ctx.fillStyle = "blue";
+            ctx.fillText("A banana has hit Billy Bear!", w, 300);
+            ctx.fillText("He's got to have a lie down!", w, 400);
+            ctx.font = "50px Comic Sans MS";
+            ctx.fillStyle = "purple";
+            ctx.fillText("Back you go!", w, 550);
+            ctx.fillText("Press the spacebar", w, 650);
+
+            if (keys[32]) {
+                music.pause();
+                bearOn=true;
+                dino.x = 100,
+                dino.y = 250,
+                end=true;
+                tc=false;
+                din=true;
+                gameEnd=false;
+                billyBear=false;
+                lion=false;
+                levels1=true;
+                levels2=false;
+                levels3=false;
+                fallDown = true;
+            }
+
+        } else {
+            ctx.drawImage(ban, this.x, this.y, 90, 90);
         }
+
+    }
 }
+
+
+
 
 
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
@@ -554,10 +612,11 @@ function randNumGen() {
     }
 }
 
-
 function ani() {
 
+    
     requestAnimationFrame(ani);
+
     now = Date.now();
     elapsed = now - then;
     if (elapsed > fpsInterval) {
@@ -625,12 +684,6 @@ function ani() {
     if (levels1) {
         if (picOn) {
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
-
-       /* for (var v=0; v<noOfBanannas; v++)
-        {
-            ban1[v].show();
-        }*/
-
         }    
     }
     if (levels2) {
@@ -697,21 +750,6 @@ function ani() {
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
-
-
-
-       // Banannas! ------------------------------------------------- //
-
-       for (var v=0; v<noOfBanannas; v++)
-       {
-           ban1[v].show();
-           ban1[v].fall();
-       }
-
-       ///////////////////////////////////////////////////////////////////
-
-
-
     }
     
 }
@@ -753,6 +791,22 @@ function ani() {
 
 } else {
     ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+
+
+
+     // Banannas! ------------------------------------------------- //
+
+     for (var i=0; i<noOfBanannas; i++) {
+         ban1[i].show();
+         ban1[i].fall();
+     }
+
+     ///////////////////////////////////////////////////////////////////
+
+
+     
+
+
  }
 
 }
