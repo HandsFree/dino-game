@@ -3,8 +3,16 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1200;
 canvas.height = 735;
 
+var endOfLevel=true; // false if white screen with text.
+
 var fallDown = true;
+
+var boneOn = true;
 var bearOn = true;
+var meatOn = true;
+
+var round1=true;
+var round2=false;
 
 const keys = [];
 
@@ -206,8 +214,8 @@ function charaters() {
         }
         if (bearOn) {
         drawSprite(bears, bear.width * bear.dirX, bear.height * bear.dirY, bear.width, bear.height, bear.x, bear.y, bear.width, bear.height);
-        }
     }
+}
 
     if(lion) {
         if (musicOn) {
@@ -220,6 +228,8 @@ function charaters() {
 // return to splash screen
 function retToMain() {
     if (keys[13]) {
+        //round1=true;
+        //round2=false;
         dino.x = 100,
         dino.y = 250,
         end=true;
@@ -231,8 +241,48 @@ function retToMain() {
         levels1=true;
         levels2=false;
         levels3=false;
+        endOfLevel=true;
     }
 }
+
+function r2() {
+        //round1=false;
+        //round2=true;
+        leoCon.pause();
+
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+
+        if (picOn) {
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        }
+
+        //if (speechOn) {
+        //ins.play();
+        //}
+
+        ctx.fillStyle = "white";
+        ctx.globalAlpha = 0.6;  
+        ctx.fillRect(150, 100, 900, 450); 
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = "purple";
+        ctx.textAlign = "center"; 
+        ctx.font = "45px Comic Sans MS";
+        ctx.fillText("Dino is looking for the treasure again!", w, 200);
+        ctx.fillText("You have to dodge the bones now!", w, 300);
+        ctx.fillText("Good Luck!", w, 400);
+        ctx.fillStyle = "red";
+        ctx.fillText("Press the Spacebar to Play!", w, 500);
+
+        if (keys[32]) {
+            //round1=false;
+            //round2=true;
+            textGo=true;
+            startScMsc.pause();
+            ins.pause();
+            ins.currentTime = 0;
+        }
+}
+
 
 function playIns() {
         leoCon.pause();
@@ -266,6 +316,293 @@ function playIns() {
         }
 }
 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Bones
+const bon = new Image();
+bon.src = "bone.png";
+
+var noOfBones = 1;
+var bon1 = [];
+        
+for (var i=0; i<noOfBones; i++) {
+    //tresureChest.dirChestX = myNum(700);
+     var x = Math.floor(Math.random()*canvas.width);
+     var y = Math.floor(Math.random()*canvas.height);
+     bon1[i] = new bones1(x,y);
+}
+              
+function bones1(x,y) {
+    this.x = x;
+    this.y = y;
+
+
+    this.fall = function() {
+        if (fallDown) {
+        var dir = Math.floor(Math.random()*3);
+        if (dir==1) {
+            this.x = this.x-10;
+        }
+
+        if (dir==2) {
+            this.x = this.x+10;
+        }
+
+        this.y = this.y+8;
+        if (this.y > canvas.height) {
+            this.y = 0;
+        }
+
+        if (!fallDown){
+        return;
+    }
+}
+} 
+
+    this.show = function() {
+        if (dino.x <= (this.x+80) && this.x <= (dino.x+80) && dino.y <= (this.y+80) && this.y <= (dino.y+80)) {  
+
+            endOfLevel=false;
+            fallDown=false;
+            boneOn=false;
+            ctx.fillStyle = "white";
+            ctx.globalAlpha = 0.6; 
+            ctx.fillRect(100, 90, 1000, 600);
+            ctx.globalAlpha = 1.0; 
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center"; 
+            ctx.font = "140px Comic Sans MS";
+            ctx.fillText("Oh No!", w, 210);
+            ctx.font = "60px Comic Sans MS";
+            ctx.fillStyle = "blue";
+            ctx.fillText("A bone has hit Dino!", w, 300);
+            ctx.fillText("He's gone to have a chew on it!", w, 400);
+            ctx.font = "50px Comic Sans MS";
+            ctx.fillStyle = "purple";
+            ctx.fillText("Back you go!", w, 550);
+            ctx.fillText("Press the spacebar", w, 650);
+          
+
+            if (keys[32]) { 
+                endOfLevel=true;     
+                music.pause();
+                boneOn=true;
+                dino.x = 100,
+                dino.y = 250,
+                end=true;
+                tc=false;
+                din=true;
+                gameEnd=false;
+                billyBear=false;
+                lion=false;
+                levels1=true;
+                levels2=false;
+                levels3=false;
+                fallDown = true;
+            }
+
+           } else {
+
+            ctx.drawImage(bon, this.x, this.y, 90, 90);
+            }
+        }
+
+    }
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// Banannas
+const ban = new Image();
+ban.src = "bananna.png";
+
+var noOfBanannas = 1;
+var ban1 = [];
+        
+for (var i=0; i<noOfBanannas; i++) {
+     var x = Math.floor(Math.random()*canvas.width);
+     var y = Math.floor(Math.random()*canvas.height);
+     ban1[i] = new banannas1(x,y);
+}
+              
+function banannas1(x,y) {
+    this.x = x;
+    this.y = y;
+
+
+    this.fall = function() {
+        if (fallDown) {
+        var dir = Math.floor(Math.random()*3);
+        if (dir==1) {
+            this.x = this.x-10;
+        }
+
+        if (dir==2) {
+            this.x = this.x+10;
+        }
+
+        this.y = this.y+8;
+        if (this.y > canvas.height) {
+            this.y = 0;
+        }
+
+        if (!fallDown){
+        return;
+    }
+}
+} 
+
+    this.show = function() {
+        if (bear.x <= (this.x+80) && this.x <= (bear.x+80) && bear.y <= (this.y+80) && this.y <= (bear.y+80)) { 
+
+            fallDown=false;
+            bearOn=false;
+            ctx.fillStyle = "white";
+            ctx.globalAlpha = 0.6; 
+            ctx.fillRect(100, 90, 1000, 600);
+            ctx.globalAlpha = 1.0; 
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center"; 
+            ctx.font = "140px Comic Sans MS";
+            ctx.fillText("Oh No!", w, 210);
+            ctx.font = "60px Comic Sans MS";
+            ctx.fillStyle = "blue";
+            ctx.fillText("A banana has hit Billy Bear!", w, 300);
+            ctx.fillText("He's got to have a lie down!", w, 400);
+            ctx.font = "50px Comic Sans MS";
+            ctx.fillStyle = "purple";
+            ctx.fillText("Back you go!", w, 550);
+            ctx.fillText("Press the spacebar", w, 650);
+          
+
+            if (keys[32]) {         
+                music.pause();
+                bearOn=true;
+                dino.x = 100,
+                dino.y = 250,
+                end=true;
+                tc=false;
+                din=true;
+                gameEnd=false;
+                billyBear=false;
+                lion=false;
+                levels1=true;
+                levels2=false;
+                levels3=false;
+                fallDown = true;
+            }
+
+           } else {
+
+            ctx.drawImage(ban, this.x, this.y, 90, 90);
+            }
+        }
+
+    }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Meat
+const meat = new Image();
+meat.src = "meat.png";
+
+var noOfMeats = 1;
+var meat1 = [];
+        
+for (var i=0; i<noOfMeats; i++) {
+     var x = Math.floor(Math.random()*canvas.width);
+     var y = Math.floor(Math.random()*canvas.height);
+     meat1[i] = new meat10(x,y);
+}
+              
+function meat10(x,y) {
+    this.x = x;
+    this.y = y;
+
+
+    this.fall = function() {
+        if (fallDown) {
+        var dir = Math.floor(Math.random()*3);
+        if (dir==1) {
+            this.x = this.x-10;
+        }
+
+        if (dir==2) {
+            this.x = this.x+10;
+        }
+
+        this.y = this.y+8;
+        if (this.y > canvas.height) {
+            this.y = 0;
+        }
+
+        if (!fallDown){
+        return;
+    }
+}
+} 
+
+    this.show = function() {
+        if (lion2.x <= (this.x+80) && this.x <= (lion2.x+80) && lion2.y <= (this.y+80) && this.y <= (lion2.y+80)) { 
+
+            fallDown=false;
+            meatOn=false;
+            ctx.fillStyle = "white";
+            ctx.globalAlpha = 0.6; 
+            ctx.fillRect(100, 90, 1000, 600);
+            ctx.globalAlpha = 1.0; 
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center"; 
+            ctx.font = "140px Comic Sans MS";
+            ctx.fillText("Oh No!", w, 210);
+            ctx.font = "60px Comic Sans MS";
+            ctx.fillStyle = "blue";
+            ctx.fillText("A chop has hit Leo!", w, 300);
+            ctx.fillText("He's gone to eat it!", w, 400);
+            ctx.font = "50px Comic Sans MS";
+            ctx.fillStyle = "purple";
+            ctx.fillText("Back you go!", w, 550);
+            ctx.fillText("Press the spacebar", w, 650);
+          
+
+            if (keys[32]) {         
+                music.pause();
+                meatOn=true;
+                dino.x = 100,
+                dino.y = 250,
+                end=true;
+                tc=false;
+                din=true;
+                gameEnd=false;
+                billyBear=false;
+                lion=false;
+                levels1=true;
+                levels2=false;
+                levels3=false;
+                fallDown = true;
+            }
+
+           } else {
+
+            ctx.drawImage(meat, this.x, this.y, 90, 90);
+            }
+        }
+
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 // level 1
 function level1() {
       // game instructions
@@ -297,6 +634,7 @@ function level2() {
       levels2=true;
       levels3=false;
       randNumGen();
+      endOfLevel=true;
   }
 }
 
@@ -314,6 +652,7 @@ function level3() {
         levels2=false;
         levels3=true;
         randNumGen();
+        endOfLevel=true;
     }
   }
 
@@ -357,91 +696,7 @@ cog.src = "cog.png";
 
 
 
-// Banannas
-const ban = new Image();
-ban.src = "bananna.png";
 
-var noOfBanannas = 5;
-var ban1 = [];
-        
-for (var i=0; i<noOfBanannas; i++) {
-     var x = Math.floor(Math.random()*canvas.width);
-     var y = Math.floor(Math.random()*canvas.height);
-     ban1[i] = new banannas1(x,y);
-}
-              
-function banannas1(x,y) {
-    this.x = x;
-    this.y = y;
-
-
-    this.fall = function() {
-        if (fallDown) {
-        var dir = Math.floor(Math.random()*3);
-        if (dir==1) {
-            this.x = this.x-10;
-        }
-
-        if (dir==2) {
-            this.x = this.x+10;
-        }
-
-        this.y = this.y+8;
-        if (this.y > canvas.height) {
-            this.y = 0;
-        }
-
-        if (!fallDown){
-        return;
-    }
-}
-} 
-
-    this.show = function() {
-        if (bear.x <= (this.x+80) && this.x <= (bear.x+80) && bear.y <= (this.y+80) && this.y <= (bear.y+80)) {
-
-            fallDown=false;
-            bearOn=false;
-            ctx.fillStyle = "white";
-            ctx.globalAlpha = 0.6; 
-            ctx.fillRect(100, 90, 1000, 600);
-            ctx.globalAlpha = 1.0; 
-            ctx.fillStyle = "red";
-            ctx.textAlign = "center"; 
-            ctx.font = "140px Comic Sans MS";
-            ctx.fillText("Oh No!", w, 210);
-            ctx.font = "60px Comic Sans MS";
-            ctx.fillStyle = "blue";
-            ctx.fillText("A banana has hit Billy Bear!", w, 300);
-            ctx.fillText("He's got to have a lie down!", w, 400);
-            ctx.font = "50px Comic Sans MS";
-            ctx.fillStyle = "purple";
-            ctx.fillText("Back you go!", w, 550);
-            ctx.fillText("Press the spacebar", w, 650);
-
-            if (keys[32]) {
-                music.pause();
-                bearOn=true;
-                dino.x = 100,
-                dino.y = 250,
-                end=true;
-                tc=false;
-                din=true;
-                gameEnd=false;
-                billyBear=false;
-                lion=false;
-                levels1=true;
-                levels2=false;
-                levels3=false;
-                fallDown = true;
-            }
-
-        } else {
-            ctx.drawImage(ban, this.x, this.y, 90, 90);
-        }
-
-    }
-}
 
 
 
@@ -450,6 +705,12 @@ function banannas1(x,y) {
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
 }
+
+
+
+
+
+
 
 
 window.addEventListener("keydown", function(e){
@@ -465,6 +726,7 @@ window.addEventListener("keydown", function(e){
     }
 });
 
+
 window.addEventListener("keyup", function(e){
     delete keys[e.keyCode];
     if(din) {
@@ -478,30 +740,32 @@ window.addEventListener("keyup", function(e){
     }
 });
 
+
+
+
 function movePlayer() {
 
-    if(din) {
- 
+    if (endOfLevel) {
+
     if (keys[38] && dino.y > 220) {
         dino.y -= dino.speed;
         dino.dirY = 0;
         dino.moving = true;
     }
 
-    
+
     if (keys[37] && dino.x > 0) {
         dino.x -= dino.speed;
         dino.dirY = 1;
         dino.moving = true;
     }
 
-   
+
    if (keys[40] && dino.y < gameHt - dino.height) {
         dino.y += dino.speed;
         dino.dirY = 0;
         dino.moving = true;
     }
-
     
     if (keys[39] && dino.x < canvas.width - dino.width) {
         dino.x += dino.speed;
@@ -509,9 +773,11 @@ function movePlayer() {
         dino.moving = true;
     }
 
-  } 
+}
 
   if (billyBear) {
+
+    if (endOfLevel) {
 
     if (keys[38] && bear.y > 220) {
         bear.y -= bear.speed;
@@ -540,10 +806,14 @@ function movePlayer() {
         bear.moving = true;
     }
 
+   } // endOfLev
+
   }
 
 
   if (lion) {
+
+    if (endOfLevel) {
 
     if (keys[38] && lion2.y > 220) {
         lion2.y -= lion2.speed;
@@ -572,9 +842,14 @@ function movePlayer() {
         lion2.moving = true;
     }
 
+   } // endOfLev
+
   }
 
 }
+
+
+
 
 function handlePlayerFrame() {
     if(din) {
@@ -616,6 +891,8 @@ function ani() {
 
     
     requestAnimationFrame(ani);
+
+
 
     now = Date.now();
     elapsed = now - then;
@@ -713,6 +990,13 @@ function ani() {
 
     randNumGen();
 
+
+
+
+
+
+
+
    if (din) {
     startScMsc.pause();
    if (dino.x <= (tresureChest.dirChestX+140) && tresureChest.dirChestX <= (dino.x+140) && dino.y <= (tresureChest.dirChestY+140) && tresureChest.dirChestY <= (dino.y+140)) {
@@ -743,6 +1027,7 @@ function ani() {
         ctx.fillStyle = "purple";
         ctx.fillText("Press the Spacebar to help Billy Bear", w, 400);
         ctx.fillText("find the Treasure Chest!", w, 500);
+        endOfLevel=false;
 
         end = false;
 
@@ -750,6 +1035,20 @@ function ani() {
         
     } else {
        ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
+
+
+    // Bones! ------------------------------------------------- //
+
+    if (round2) {
+     for (var i=0; i<noOfBones; i++) {
+        bon1[i].show();
+        bon1[i].fall();
+    }
+}
+
+    ///////////////////////////////////////////////////////////////////
+
+
     }
     
 }
@@ -783,6 +1082,7 @@ function ani() {
         ctx.fillStyle = "purple";
         ctx.fillText("Press the Spacebar to help Leo the Lion", w, 500);
         ctx.fillText("find the Treasure Chest!", w, 600);
+        endOfLevel=false;
 
         end = false;
 
@@ -792,20 +1092,15 @@ function ani() {
 } else {
     ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
 
-
-
      // Banannas! ------------------------------------------------- //
-
+     if (round2) {
      for (var i=0; i<noOfBanannas; i++) {
          ban1[i].show();
          ban1[i].fall();
      }
+    }
 
      ///////////////////////////////////////////////////////////////////
-
-
-     
-
 
  }
 
@@ -840,19 +1135,56 @@ if (lion) {
         ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
         ctx.fillStyle = "red";
-        ctx.fillText("Thanks for Playing!", w, 500);
-        ctx.fillStyle = "purple";
-        ctx.fillText("Press the Enter Key to Play Again!", w, 600);
+        endOfLevel=false;
 
+        if (round1) {
+            ctx.fillText("That's go to Round 2!", w, 500);
+        }
+
+        if (round2) {
+            ctx.fillText("Thanks for Playing!", w, 500);
+        }
+
+        ctx.fillStyle = "purple";
+        if (round1) {
+        ctx.fillText("Press the Spacebar to Continue!", w, 600);
+        }
+
+        if (round2) {
+            ctx.fillText("Press the Spacebar to Play Again!", w, 600);
+            }
+
+        
         end = false;
 
         retToMain();
 
+         // Meat! ------------------------------------------------- //
+
+        /* if (round2) {
+         for (var i=0; i<noOfMeats; i++) {
+            meat1[i].show();
+            meat1[i].fall();
+        }
+     }*/
+   
+        ///////////////////////////////////////////////////////////////////
+
+        /*if (round1) {
+            if (keys[32]) {
+                r2();
+            }    
+        }*/
+
+      
+
 } else {
-    ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
- }
+    ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);       
+
+ } 
 
 }
+
 
 }///textGo
 
