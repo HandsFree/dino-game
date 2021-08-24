@@ -399,25 +399,16 @@ function bones1(x,y) {
             ctx.font = "50px Comic Sans MS";
             ctx.fillStyle = "purple";
             ctx.fillText("Back you go!", w, 550);
-            ctx.fillText("Press the spacebar", w, 650);
-          
+            ctx.fillText("Press the spacebar", w, 650);    
 
-            if (keys[32]) { 
+            if (keys[32]) {
                 endOfLevel=true;   
                 music.pause();
                 boneOn=true;
                 dino.x = 100,
                 dino.y = 250,
-                end=true;
-                tc=false;
-                din=true;
-                gameEnd=false;
-                billyBear=false;
-                lion=false;
-                levels1=true;
-                levels2=false;
-                levels3=false;
                 fallDown = true;
+                r2();
             }
 
            } else {
@@ -498,7 +489,7 @@ function banannas1(x,y) {
             ctx.fillText("Press the spacebar", w, 650);
           
 
-            if (keys[32]) { 
+            /*if (keys[32]) { 
                 endOfLevel=true;   
                 music.pause();
                 bearOn=true;
@@ -513,10 +504,24 @@ function banannas1(x,y) {
                 levels1=true;
                 levels2=false;
                 levels3=false;
+                fallDown = true;       
+            }*/
+
+            if (keys[32]) { 
+                endOfLevel=true;   
+                music.pause();
+                end=true;
+                //tc=false;
+                //din=true;
+                //gameEnd=false;
+                //billyBear=false;
+                //lion=false;
+                bearOn=true;
+                boneOn=true;
+                dino.x = 100,
+                dino.y = 250,
                 fallDown = true;
-
-
-                
+                r2();
             }
 
            } else {
@@ -596,7 +601,7 @@ function meat10(x,y) {
             ctx.fillText("Press the spacebar", w, 650);
           
 
-            if (keys[32]) {       
+            /*if (keys[32]) {       
                 endOfLevel=true;
                 music.pause();
                 meatOn=true;
@@ -612,6 +617,17 @@ function meat10(x,y) {
                 levels2=false;
                 levels3=false;
                 fallDown = true;
+            }*/
+
+            if (keys[32]) { 
+                meatOn=true;
+                endOfLevel=true;   
+                music.pause();
+                boneOn=true;
+                dino.x = 100,
+                dino.y = 250,
+                fallDown = true;
+                r2();
             }
                     
 
