@@ -9,21 +9,25 @@ var endOfLevel=true; // false if white screen with text.
 
 var fallDown = true;
 
+/******objects falling*********/
 var boneOn = true;
 var bearOn = true;
 var meatOn = true;
+/********end******************/
 
-var round1=true;
-var round2=false;
+var round1=true; // start levels
+var round2=false; // with objects
 
-const keys = [];
+const keys = []; // keyboard operations
 
-var gameInsHt1 = 10;
+var gameInsHt1 = 10; // upper green panel
 
+/******lower green panels******/
 var gameInsHt = 40;
 var gameHt = canvas.height - gameInsHt;
 var gameInsWd = canvas.width;
 var gameInsCol = "darkgreen";
+/*******end*****************/
 
 var tc = false; // one tresure chest
 var start = false;
@@ -31,9 +35,9 @@ var end = true;
 
 //animals
 var vol = true;
-var din = true;
-var billyBear = false;
-var lion = false;
+var din = true; // shows a Dino!
+var billyBear = false; // shows a Billy Bear!
+var lion = false; // shows a Leo Lion!
 
 var gameEnd = true;
 var textGo = false;
@@ -94,6 +98,7 @@ var tresureChest = {
     dirChestY: 0,
 };
 
+/**********sound effects and music****************/
 var startScTx = new Audio("sounds/startScTx.mp3");
 var startScMsc = new Audio("sounds/startScMsc.mp3");
 
@@ -106,9 +111,12 @@ var roarSd = new Audio("sounds/T-Rex1.mp3");
 var billySd = new Audio("sounds/bear_Sd.mp3");
 var lion_Sd = new Audio("sounds/lion_Sd.mp3");
 var music = new Audio("sounds/bensound-ukulele.mp3");
+/***************end********************************/
 
+/***********For Menu************/
 var togSet=true;
 var togMenu=false;
+/************end****************/
 
 function settings() {
     ctx.fillStyle = "black";
@@ -401,15 +409,33 @@ function bones1(x,y) {
             ctx.fillText("Back you go!", w, 550);
             ctx.fillText("Press the spacebar", w, 650);    
 
-            if (keys[32]) {
-                endOfLevel=true;   
+            if (keys[32]) { 
                 music.pause();
                 boneOn=true;
-                dino.x = 100,
-                dino.y = 250,
                 fallDown = true;
-                r2();
-            }
+                
+            lion_Sd.pause();
+            leoCon.pause();
+            round1=false;
+            round2=true;
+            textGo2=true;
+            end=false;
+            endOfLevel=true;
+            din=false;
+            lion=false;
+            levels1=false;
+            levels2=true;
+            levels3=false;
+            endOfLevel=true;
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        }
+
+
+
+
+
+
 
            } else {
 
@@ -487,42 +513,80 @@ function banannas1(x,y) {
             ctx.fillStyle = "purple";
             ctx.fillText("Back you go!", w, 550);
             ctx.fillText("Press the spacebar", w, 650);
+
+            if (keys[32]) { 
+            lion_Sd.pause();
+            leoCon.pause();
+            round1=false;
+            round2=true;
+            textGo2=true;
+            end=false;
+            endOfLevel=true;
+            din=false;
+            lion=false;
+            levels1=false;
+            levels2=true;
+            levels3=false;
+            endOfLevel=true;
+        
+
+
           
 
-            /*if (keys[32]) { 
+        //if (keys[32]) { 
+
+                round1=false;
+                round2=true;
+                textGo2=true;
+                end=false;
+                fallDown = true;
+                din=false;
+
+
+               music.pause();
+
+                boneOn=true;
+                
+          
                 endOfLevel=true;   
-                music.pause();
+                
                 bearOn=true;
-                dino.x = 100,
-                dino.y = 250,
-                end=true;
+
+                end=false;
                 tc=false;
-                din=true;
-                gameEnd=false;
+    
+                //gameEnd=false;
                 billyBear=false;
-                lion=false;
+                
+                /*lion=false;
                 levels1=true;
                 levels2=false;
                 levels3=false;
                 fallDown = true;       
-            }*/
-
-            if (keys[32]) { 
-                endOfLevel=true;   
+   
                 music.pause();
-                end=true;
+                end=true;*/
                 //tc=false;
                 //din=true;
                 //gameEnd=false;
                 //billyBear=false;
                 //lion=false;
-                bearOn=true;
-                boneOn=true;
+                /*boneOn=true;
                 dino.x = 100,
                 dino.y = 250,
-                fallDown = true;
-                r2();
-            }
+                
+
+                lion_Sd.pause();
+            leoCon.pause();
+            
+            
+            
+            endOfLevel=true;
+            din=false;
+            lion=false;
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+            */}
 
            } else {
 
@@ -620,6 +684,8 @@ function meat10(x,y) {
             }*/
 
             if (keys[32]) { 
+                round1=false;
+                round2=true;
                 meatOn=true;
                 endOfLevel=true;   
                 music.pause();
@@ -627,7 +693,22 @@ function meat10(x,y) {
                 dino.x = 100,
                 dino.y = 250,
                 fallDown = true;
-                r2();
+
+
+                lion_Sd.pause();
+                leoCon.pause();
+                round1=false;
+                round2=true;
+                textGo2=true;
+                end=false;
+                endOfLevel=true;
+                din=false;
+                lion=false;
+                levels1=false;
+                levels2=true;
+                levels3=false;
+                endOfLevel=true;
+                
             }
                     
 
