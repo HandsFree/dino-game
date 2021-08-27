@@ -106,6 +106,13 @@ var dinoCon = new Audio("sounds/dinoCon.mp3");
 var billyCon = new Audio("sounds/billyCon.mp3");
 var leoCon = new Audio("sounds/leoCon.mp3");
 
+var dinoOhNo = new Audio("sounds/dino-oh-no.mp3");
+var billyOhNo = new Audio("sounds/billy-oh-no.mp3");
+var leoOhNo = new Audio("sounds/leo-oh-no.mp3");
+
+
+var leoR2 = new Audio("sounds/leo-round2.mp3");
+
 var ins = new Audio("sounds/ins.mp3");
 var roarSd = new Audio("sounds/T-Rex1.mp3");
 var billySd = new Audio("sounds/bear_Sd.mp3");
@@ -389,6 +396,9 @@ function bones1(x,y) {
     this.show = function() {
         if (dino.x <= (this.x+80) && this.x <= (dino.x+80) && dino.y <= (this.y+80) && this.y <= (dino.y+80)) {  
 
+            music.pause();
+            dinoOhNo.play();
+
             endOfLevel=false;
             fallDown=false;
             boneOn=false;
@@ -410,7 +420,12 @@ function bones1(x,y) {
             ctx.fillText("Press the spacebar", w, 650);    
 
             if (keys[32]) { 
-                music.pause();
+
+                dinoOhNo.pause();
+                dinoOhNo.currentTime = 0;
+                music.play();
+
+                //music.pause();
                 boneOn=true;
                 fallDown = true;
                 
@@ -494,6 +509,9 @@ function banannas1(x,y) {
     this.show = function() {
         if (bear.x <= (this.x+80) && this.x <= (bear.x+80) && bear.y <= (this.y+80) && this.y <= (bear.y+80)) { 
 
+            music.pause();
+            billyOhNo.play();
+
             endOfLevel=false;
             fallDown=false;
             bearOn=false;
@@ -514,9 +532,15 @@ function banannas1(x,y) {
             ctx.fillText("Back you go!", w, 550);
             ctx.fillText("Press the spacebar", w, 650);
 
-            if (keys[32]) { 
-            lion_Sd.pause();
-            leoCon.pause();
+            if (keys[32]) {
+
+            //lion_Sd.pause();
+            //leoCon.pause();
+            billyOhNo.pause();
+            billyOhNo.currentTime = 0;
+            music.play();
+
+
             round1=false;
             round2=true;
             textGo2=true;
@@ -543,7 +567,7 @@ function banannas1(x,y) {
                 din=false;
 
 
-               music.pause();
+               //music.pause();
 
                 boneOn=true;
                 
@@ -558,35 +582,7 @@ function banannas1(x,y) {
                 //gameEnd=false;
                 billyBear=false;
                 
-                /*lion=false;
-                levels1=true;
-                levels2=false;
-                levels3=false;
-                fallDown = true;       
-   
-                music.pause();
-                end=true;*/
-                //tc=false;
-                //din=true;
-                //gameEnd=false;
-                //billyBear=false;
-                //lion=false;
-                /*boneOn=true;
-                dino.x = 100,
-                dino.y = 250,
-                
-
-                lion_Sd.pause();
-            leoCon.pause();
-            
-            
-            
-            endOfLevel=true;
-            din=false;
-            lion=false;
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
-            */}
+                }
 
            } else {
 
@@ -644,6 +640,9 @@ function meat10(x,y) {
     this.show = function() {
         if (lion2.x <= (this.x+80) && this.x <= (lion2.x+80) && lion2.y <= (this.y+80) && this.y <= (lion2.y+80)) { 
 
+            music.pause();
+            leoOhNo.play();
+
             endOfLevel=false;
             fallDown=false;
             meatOn=false;     
@@ -665,25 +664,12 @@ function meat10(x,y) {
             ctx.fillText("Press the spacebar", w, 650);
           
 
-            /*if (keys[32]) {       
-                endOfLevel=true;
-                music.pause();
-                meatOn=true;
-                dino.x = 100,
-                dino.y = 250,
-                end=true;
-                tc=false;
-                din=true;
-                gameEnd=false;
-                billyBear=false;
-                lion=false;
-                levels1=true;
-                levels2=false;
-                levels3=false;
-                fallDown = true;
-            }*/
-
             if (keys[32]) { 
+
+                leoOhNo.pause();
+                leoOhNo.currentTime = 0;
+                music.play();
+
                 round1=false;
                 round2=true;
                 meatOn=true;
@@ -1257,9 +1243,18 @@ if (lion) {
         music.pause();
 
         if (speechOn) {
+
+            if (round1) {
+                leoR2.play();
+            }
+
+            if (round2) {
+                leoCon.play();
+            }
+
         lion_Sd.play();
         lion_Sd.volume = 0.3;
-        leoCon.play();
+        
         }
 
 
@@ -1305,7 +1300,8 @@ if (lion) {
 if (round1) {
     if (keys[32]) {
         lion_Sd.pause();
-        leoCon.pause();
+        leoR2.pause();
+        leoR2.currentTime = 0;
         round1=false;
         round2=true;
         textGo2=true;
@@ -1323,8 +1319,13 @@ if (round1) {
 }
         
     if (round2) {
+        if (keys[13]) {
+        lion_Sd.pause();
+        leoCon.pause();
+        leoCon.currentTime = 0;
         retToMain();
         endOfLevel=true;
+        }
     }
      
 
