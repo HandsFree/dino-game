@@ -112,6 +112,8 @@ var leoOhNo = new Audio("sounds/leo-oh-no.mp3");
 
 
 var leoR2 = new Audio("sounds/leo-round2.mp3");
+var rSpk2 = new Audio("sounds/R2.mp3");
+
 
 var ins = new Audio("sounds/ins.mp3");
 var roarSd = new Audio("sounds/T-Rex1.mp3");
@@ -279,6 +281,9 @@ function r2() {
         //ins.play();
         //}
 
+        music.pause();
+        rSpk2.play();
+
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
         ctx.fillRect(150, 100, 900, 450); 
@@ -293,6 +298,8 @@ function r2() {
         ctx.fillText("Press the Spacebar to Play!", w, 500);
 
         if (keys[32]) {
+            rSpk2.pause();
+            rSpk2.currentTime = 0;
             round1=false;
             round2=true;
             textGo=true;
