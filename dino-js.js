@@ -277,12 +277,10 @@ function r2() {
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
         }
 
-        //if (speechOn) {
-        //ins.play();
-        //}
-
+        if (speechOn) {
         music.pause();
         rSpk2.play();
+        }
 
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6;  
