@@ -112,7 +112,7 @@ var leoOhNo = new Audio("sounds/leo-oh-no.mp3");
 
 
 var leoR2 = new Audio("sounds/leo-round2.mp3");
-var rSpk2 = new Audio("sounds/R2.mp3");
+var rSpk2 = new Audio("sounds/RoundSk2.mp3");
 
 
 var ins = new Audio("sounds/ins.mp3");
@@ -303,8 +303,8 @@ function r2() {
             textGo=true;
             textGo2=false;
             startScMsc.pause();
-            ins.pause();
-            ins.currentTime = 0;
+            //ins.pause();
+            //ins.currentTime = 0;
             dino.x = 50;
             dino.y = 350;
             end=true;
