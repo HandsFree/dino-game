@@ -53,8 +53,8 @@ var w = canvas.width / 2;
 
 //animals objects
 const dino = {
-    x: 100,
-    y: 250,
+    x: 0,
+    y: 500,
     width: 175,
     height: 175,
     dirX: 0,
@@ -64,8 +64,8 @@ const dino = {
 };
 
 const bear = {
-    x: 100,
-    y: 250,
+    x: 0,
+    y: 500,
     width: 165,
     height: 215,
     dirX: 0,
@@ -75,8 +75,8 @@ const bear = {
 };
 
 const lion2 = {
-    x: 100,
-    y: 250,
+    x: 0,
+    y: 500,
     width: 250,
     height: 160,
     dirX: 0,
@@ -132,20 +132,28 @@ function settings() {
     ctx.textAlign = "center";
     ctx.font = "bold 15px Arial";
     ctx.drawImage(cog, 10, 5);
-    ctx.fillText("Settings", 35, 70);
-    ctx.fillText("Press S", 35, 90);
+    //ctx.fillText("Settings", 35, 70);
+    //ctx.fillText("Press S", 35, 90);
 
-    if (keys[83]) { //s
+    /*if (keys[83]) { //s
         togSet=false;
         togMenu=true;
         showMenu();
-    }
+    }*/
 }
 
 
 speechOn=true;
 musicOn=true;
 picOn=true;
+
+document.onmousedown = mouseClick;
+
+function mouseClick(e) {
+     if (e.clientX > 10 && e.clientY < 60){
+        showMenu();
+    }
+}
 
 function showMenu() {
     togMenu=true;
@@ -253,8 +261,8 @@ function retToMain() {
     if (keys[13]) {
         round1=true;
         round2=false;
-        dino.x = 100,
-        dino.y = 250,
+        dino.x = 0,
+        dino.y = 500,
         end=true;
         tc=false;
         din=true;
@@ -293,9 +301,9 @@ function r2() {
         ctx.fillText("You have to dodge the bones now!", w, 300);
         ctx.fillText("Good Luck!", w, 400);
         ctx.fillStyle = "red";
-        ctx.fillText("Press the Spacebar to Play!", w, 500);
+        ctx.fillText("Press the Escape Key to Play!", w, 500);
 
-        if (keys[32]) {
+        if (keys[13]) {
             rSpk2.pause();
             rSpk2.currentTime = 0;
             round1=false;
@@ -305,8 +313,8 @@ function r2() {
             startScMsc.pause();
             //ins.pause();
             //ins.currentTime = 0;
-            dino.x = 50;
-            dino.y = 350;
+            dino.x = 0;
+            dino.y = 500;
             end=true;
             tc=false;
             din=true;
@@ -362,13 +370,21 @@ function playIns() {
 const bon = new Image();
 bon.src = "bone.png";
 
-var noOfBones = 4;
+var noOfBones = 8;
 var bon1 = [];
         
-for (var i=0; i<noOfBones; i++) {
-     var x = myNum(700);
+/*for (var i=0; i<noOfBones; i++) {
+     var x = myNum(700)+100;
      var y = Math.floor(Math.random()*canvas.height);
      bon1[i] = new bones1(x,y);
+}*/
+
+
+
+for (var i=0; i<noOfBones; i++) {
+    var x = myNum(700);
+    var y = Math.floor(Math.random()*1);
+    bon1[i] = new bones1(x,y);
 }
               
 function bones1(x,y) {
@@ -433,6 +449,27 @@ function bones1(x,y) {
                 //music.pause();
                 boneOn=true;
                 fallDown = true;
+
+                for (var i=0; i<noOfBones; i++) {
+                    var x = myNum(700);
+                    var y = Math.floor(Math.random()*1);
+                    bon1[i] = new bones1(x,y);
+                }
+    
+                for (var i=0; i<noOfBanannas; i++) {
+                    var x = myNum(700);
+                    var y = Math.floor(Math.random()*1);
+                    ban1[i] = new banannas1(x,y);
+               }
+    
+               for (var i=0; i<noOfMeats; i++) {
+                var x = myNum(700);
+                var y = Math.floor(Math.random()*1);
+                meat1[i] = new meat10(x,y);
+           }
+                
+
+
                 
             lion_Sd.pause();
             leoCon.pause();
@@ -447,13 +484,9 @@ function bones1(x,y) {
             levels2=true;
             levels3=false;
             endOfLevel=true;
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+            //ctx.clearRect(0,0,canvas.width, canvas.height);
+            //ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
         }
-
-
-
-
 
 
 
@@ -474,13 +507,14 @@ function bones1(x,y) {
 const ban = new Image();
 ban.src = "bananna.png";
 
-var noOfBanannas = 5;
+var noOfBanannas = 12;
 var ban1 = [];
+
+
         
 for (var i=0; i<noOfBanannas; i++) {
-    // var x = Math.floor(Math.random()*canvas.width);
      var x = myNum(700);
-     var y = Math.floor(Math.random()*canvas.height);
+     var y = Math.floor(Math.random()*1);
      ban1[i] = new banannas1(x,y);
 }
               
@@ -500,7 +534,7 @@ function banannas1(x,y) {
             this.x = this.x+10;
         }
 
-        this.y = this.y+8;
+        this.y = this.y+12;
         if (this.y > canvas.height) {
             this.y = 0;
         }
@@ -539,13 +573,10 @@ function banannas1(x,y) {
 
             if (keys[32]) {
 
-            //lion_Sd.pause();
-            //leoCon.pause();
+
             billyOhNo.pause();
             billyOhNo.currentTime = 0;
             music.play();
-
-
             round1=false;
             round2=true;
             textGo2=true;
@@ -557,12 +588,25 @@ function banannas1(x,y) {
             levels2=true;
             levels3=false;
             endOfLevel=true;
-        
 
+            for (var i=0; i<noOfBones; i++) {
+                var x = myNum(700);
+                var y = Math.floor(Math.random()*1);
+                bon1[i] = new bones1(x,y);
+            }
 
-          
+            for (var i=0; i<noOfBanannas; i++) {
+                var x = myNum(700);
+                var y = Math.floor(Math.random()*1);
+                ban1[i] = new banannas1(x,y);
+           }
 
-        //if (keys[32]) { 
+           for (var i=0; i<noOfMeats; i++) {
+            var x = myNum(700);
+            var y = Math.floor(Math.random()*1);
+            meat1[i] = new meat10(x,y);
+       }
+
 
                 round1=false;
                 round2=true;
@@ -571,8 +615,6 @@ function banannas1(x,y) {
                 fallDown = true;
                 din=false;
 
-
-               //music.pause();
 
                 boneOn=true;
                 
@@ -605,13 +647,14 @@ function banannas1(x,y) {
 const meat = new Image();
 meat.src = "meat.png";
 
-var noOfMeats = 6;
+var noOfMeats = 15;
 var meat1 = [];
+
+
         
 for (var i=0; i<noOfMeats; i++) {
-     //var x = Math.floor(Math.random()*canvas.width);
      var x = myNum(700);
-     var y = Math.floor(Math.random()*canvas.height);
+     var y = Math.floor(Math.random()*1);
      meat1[i] = new meat10(x,y);
 }
               
@@ -631,7 +674,7 @@ function meat10(x,y) {
             this.x = this.x+10;
         }
 
-        this.y = this.y+8;
+        this.y = this.y+20;
         if (this.y > canvas.height) {
             this.y = 0;
         }
@@ -681,10 +724,27 @@ function meat10(x,y) {
                 endOfLevel=true;   
                 music.pause();
                 boneOn=true;
-                dino.x = 100,
-                dino.y = 250,
+                dino.x = 0,
+                dino.y = 500,
                 fallDown = true;
 
+                for (var i=0; i<noOfBones; i++) {
+                    var x = myNum(700);
+                    var y = Math.floor(Math.random()*1);
+                    bon1[i] = new bones1(x,y);
+                }
+    
+                for (var i=0; i<noOfBanannas; i++) {
+                    var x = myNum(700);
+                    var y = Math.floor(Math.random()*1);
+                    ban1[i] = new banannas1(x,y);
+               }
+    
+               for (var i=0; i<noOfMeats; i++) {
+                var x = myNum(700);
+                var y = Math.floor(Math.random()*1);
+                meat1[i] = new meat10(x,y);
+           }
 
                 lion_Sd.pause();
                 leoCon.pause();
@@ -739,8 +799,8 @@ function level1() {
 function level2() {
   if (keys[32]){
       billyBear=true;
-      bear.x = 50;
-      bear.y = 350;
+      bear.x = 0;
+      bear.y = 500;
       end=true;
       tc=false;
       din=false;
@@ -750,14 +810,32 @@ function level2() {
       levels3=false;
       randNumGen();
       endOfLevel=true;
+
+      for (var i=0; i<noOfBones; i++) {
+        var x = myNum(700);
+        var y = Math.floor(Math.random()*1);
+        bon1[i] = new bones1(x,y);
+    }
+
+    for (var i=0; i<noOfBanannas; i++) {
+        var x = myNum(700);
+        var y = Math.floor(Math.random()*1);
+        ban1[i] = new banannas1(x,y);
+   }
+
+   for (var i=0; i<noOfMeats; i++) {
+    var x = myNum(700);
+    var y = Math.floor(Math.random()*1);
+    meat1[i] = new meat10(x,y);
+}
   }
 }
 
 // level 3
 function level3() {
     if (keys[32]){
-        lion2.x = 100;
-        lion2.y = 450;
+        lion2.x = 0;
+        lion2.y = 500;
         end=true;
         tc=false;
         billyBear=false;
@@ -768,6 +846,25 @@ function level3() {
         levels3=true;
         randNumGen();
         endOfLevel=true;
+
+        for (var i=0; i<noOfBones; i++) {
+            var x = myNum(700);
+            var y = Math.floor(Math.random()*1);
+            bon1[i] = new bones1(x,y);
+        }
+
+        for (var i=0; i<noOfBanannas; i++) {
+            var x = myNum(700);
+            var y = Math.floor(Math.random()*1);
+            ban1[i] = new banannas1(x,y);
+       }
+
+       for (var i=0; i<noOfMeats; i++) {
+        var x = myNum(700);
+        var y = Math.floor(Math.random()*1);
+        meat1[i] = new meat10(x,y);
+   }
+
     }
   }
 
@@ -1053,7 +1150,7 @@ function ani() {
 
         } else {
 
-        ctx.fillText("Press the Spacebar to continue!", w, 680);
+        ctx.fillText("Press the Escape Key to continue!", w, 680);
 
         round1=true;
         round2=false;
@@ -1072,7 +1169,7 @@ function ani() {
         }
 
 
-        if (keys[32]) {
+        if (keys[13]) {
             start=true;
             gameEnd=true;
             startScTx.pause();
