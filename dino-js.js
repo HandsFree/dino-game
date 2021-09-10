@@ -4,6 +4,7 @@ canvas.width = 1200;
 canvas.height = 735;
 
 var textGo2 = false; // round 2 instructions
+var textGo3 = false; // round 2 play
 
 var endOfLevel=true; // false if white screen with text.
 
@@ -132,21 +133,21 @@ function settings() {
     ctx.textAlign = "center";
     ctx.font = "bold 15px Arial";
     ctx.drawImage(cog, 10, 5);
-    //ctx.fillText("Settings", 35, 70);
-    //ctx.fillText("Press S", 35, 90);
+    ctx.fillText("Settings", 35, 70);
+    ctx.fillText("Press S", 35, 90);
 
-    /*if (keys[83]) { //s
+    if (keys[83]) { //s
         togSet=false;
         togMenu=true;
         showMenu();
-    }*/
+    }
 }
-
 
 speechOn=true;
 musicOn=true;
 picOn=true;
 
+/*Mouse Controls*/
 document.onmousedown = mouseClick;
 
 function mouseClick(e) {
@@ -154,6 +155,7 @@ function mouseClick(e) {
         showMenu();
     }
 }
+/*End of Mouse Controls*/
 
 function showMenu() {
     togMenu=true;
@@ -329,6 +331,57 @@ function r2() {
     }
 
 
+    function r3() {
+
+
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+
+        if (picOn) {
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        }
+
+        if (speechOn) {
+        music.pause();
+        //rSpk2.play();
+        }
+
+        ctx.fillStyle = "white";
+        ctx.globalAlpha = 0.6;  
+        ctx.fillRect(150, 100, 900, 450); 
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = "purple";
+        ctx.textAlign = "center"; 
+        ctx.font = "bolder 100px Comic Sans MS";
+        ctx.fillText("Let's Go!", w, 300);
+        ctx.font = "bolder 30px Comic Sans MS";
+        ctx.fillStyle = "red";
+        ctx.fillText("Escape Key to Play!", w, 500);
+
+        if (keys[13]) {
+            //rSpk2.pause();
+            //rSpk2.currentTime = 0;
+            round1=false;
+            round2=true;
+            textGo=true;
+            textGo2=false;
+            textGo3=false;
+            startScMsc.pause();
+            dino.x = 0;
+            dino.y = 500;
+            end=true;
+            tc=false;
+            din=true;
+            billyBear=false;
+            lion=false;
+            levels1=true;
+            levels2=false;
+            levels3=false;
+            randNumGen();
+            endOfLevel=true;
+        }
+    }
+
+
 
 function playIns() {
         leoCon.pause();
@@ -475,7 +528,7 @@ function bones1(x,y) {
             leoCon.pause();
             round1=false;
             round2=true;
-            textGo2=true;
+            textGo3=true;
             end=false;
             endOfLevel=true;
             din=false;
@@ -579,7 +632,7 @@ function banannas1(x,y) {
             music.play();
             round1=false;
             round2=true;
-            textGo2=true;
+            textGo3=true;
             end=false;
             endOfLevel=true;
             din=false;
@@ -610,7 +663,7 @@ function banannas1(x,y) {
 
                 round1=false;
                 round2=true;
-                textGo2=true;
+                //textGo2=true;
                 end=false;
                 fallDown = true;
                 din=false;
@@ -750,7 +803,7 @@ function meat10(x,y) {
                 leoCon.pause();
                 round1=false;
                 round2=true;
-                textGo2=true;
+                textGo3=true;
                 end=false;
                 endOfLevel=true;
                 din=false;
@@ -1198,6 +1251,10 @@ function ani() {
 
     if (textGo2) {
         r2();
+    }
+
+    if (textGo3) {
+        r3();
     }
 
     if (!textGo) {
