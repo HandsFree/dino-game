@@ -3,10 +3,17 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1200;
 canvas.height = 735;
 
+var fireEnd;
+
+//var fireworksOn = false;
+
 var textGo2 = false; // round 2 instructions
 var textGo3 = false; // round 2 play
+var textGo4 = false;
 
 var endOfLevel=true; // false if white screen with text.
+
+var fireworksOn=false;
 
 var fallDown = true;
 
@@ -18,6 +25,8 @@ var meatOn = true;
 
 var round1=true; // start levels
 var round2=false; // with objects
+var round3=false; // final round
+var round4=false;
 
 const keys = []; // keyboard operations
 
@@ -152,9 +161,9 @@ function settings() {
     }
 }
 
-speechOn=true;
-musicOn=true;
-picOn=true;
+var speechOn=true;
+var musicOn=true;
+var picOn=true;
 
 /*Mouse Controls*/
 document.onmousedown = mouseClick;
@@ -272,6 +281,8 @@ function retToMain() {
     if (keys[13]) {
         round1=true;
         round2=false;
+        round3=false;
+        round4=false;
         dino.x = 0,
         dino.y = 500,
         end=true;
@@ -322,8 +333,6 @@ function r2() {
             textGo=true;
             textGo2=false;
             startScMsc.pause();
-            //ins.pause();
-            //ins.currentTime = 0;
             dino.x = 0;
             dino.y = 500;
             end=true;
@@ -401,6 +410,81 @@ function r2() {
         }
     }
 
+
+
+
+    function r4() {
+
+
+
+
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+
+        if (picOn) {
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        }
+
+        if (speechOn) {
+        music.pause();
+        escapeKey.play();
+        }
+
+        ctx.fillStyle = "white";
+        ctx.globalAlpha = 0.6;  
+        ctx.fillRect(150, 100, 900, 500); 
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = "purple";
+        ctx.textAlign = "center";
+        ctx.font = "45px Comic Sans MS";
+        ctx.fillText("Dino is looking for the treasure!", w, 200);
+        ctx.fillText("for the final time!", w, 250);
+        ctx.fillText("Dodge the bones from left to right", w, 350);
+        ctx.fillText("Good Luck!", w, 450);
+        ctx.font = "bolder 30px Comic Sans MS";
+        ctx.fillStyle = "red";
+        ctx.fillText("Escape Key to Play!", w, 550);
+
+ 
+   
+
+        if (keys[13]) {
+
+           /* if (speechOn) {
+            escapeKey.pause();
+            escapeKey.currentTime = 0;
+            }*/
+
+
+            round1=false;
+            round2=false;
+            round3=true;
+
+            textGo=true;
+            textGo2=false;
+            textGo3=false;
+            textGo4=false;
+
+
+
+            //startScMsc.pause();
+            dino.x = 0;
+            dino.y = 500;
+            end=true;
+            tc=false;
+            din=true;
+            billyBear=false;
+            lion=false;
+            levels1=true;
+            levels2=false;
+            levels3=false;
+            randNumGen();
+            endOfLevel=true;
+
+            
+
+        }
+    }
+
  
 
 
@@ -445,15 +529,9 @@ function playIns() {
 const bon = new Image();
 bon.src = "bone.png";
 
+
 var noOfBones = 8;
 var bon1 = [];
-        
-/*for (var i=0; i<noOfBones; i++) {
-     var x = myNum(700)+100;
-     var y = Math.floor(Math.random()*canvas.height);
-     bon1[i] = new bones1(x,y);
-}*/
-
 
 
 for (var i=0; i<noOfBones; i++) {
@@ -468,7 +546,9 @@ function bones1(x,y) {
 
 
     this.fall = function() {
+
         if (fallDown) {
+
         var dir = Math.floor(Math.random()*3);
         if (dir==1) {
             this.x = this.x-10;
@@ -483,11 +563,46 @@ function bones1(x,y) {
             this.y = 0;
         }
 
+        }//end falldown
+
         if (!fallDown){
         return;
+        }
     }
-}
-} 
+
+    //////////////////////////////////////////
+
+    var dx=15;
+
+    this.right = function() {
+
+        if (fallDown) {
+
+            //this.x = this.x+10;
+        
+            if (this.x > canvas.width) {
+                //this.x = 0;
+                dx =- dx;
+            }
+
+            this.x += dx;
+            
+            this.y = this.y+30;
+            if (this.y > canvas.height) {
+                this.y = 0;
+            }
+        }
+
+        if (!fallDown){
+        return;
+        }
+    }
+    
+
+////////////////////////////////////////////////////////////
+
+
+
 
     this.show = function() {
         if (dino.x <= (this.x+80) && this.x <= (dino.x+80) && dino.y <= (this.y+80) && this.y <= (dino.y+80)) {  
@@ -571,8 +686,6 @@ function bones1(x,y) {
             levels2=true;
             levels3=false;
             endOfLevel=true;
-            //ctx.clearRect(0,0,canvas.width, canvas.height);
-            //ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
         }
 
 
@@ -580,6 +693,7 @@ function bones1(x,y) {
            } else {
 
             ctx.drawImage(bon, this.x, this.y, 90, 90);
+            
             }
         }
 
@@ -625,12 +739,40 @@ function banannas1(x,y) {
         if (this.y > canvas.height) {
             this.y = 0;
         }
+        
+        } //end falldown
 
         if (!fallDown){
         return;
+        }
+    } // end of fall function
+
+    /////////////////////////////////////////////////////////
+
+    var dx=15;
+
+    this.right = function() {
+
+        if (fallDown) {
+       
+            if (this.x > canvas.width) {
+                dx =- dx;
+            }
+
+            this.x += dx;
+            
+            this.y = this.y+30;
+            if (this.y > canvas.height) {
+                this.y = 0;
+            }
+        }
+
+        if (!fallDown){
+        return;
+        }
     }
-}
-} 
+
+   ///////////////////////////////////////////////////////////
 
     this.show = function() {
         if (bear.x <= (this.x+80) && this.x <= (bear.x+80) && bear.y <= (this.y+80) && this.y <= (bear.y+80)) { 
@@ -784,17 +926,45 @@ function meat10(x,y) {
             this.y = 0;
         }
 
+        } // end fallDown
+
         if (!fallDown){
         return;
+        }
+} // end of fall function
+
+////////////////////////////////////////////////////////////
+
+var dx=15;
+
+this.right = function() {
+
+    if (fallDown) {
+    
+        if (this.x > canvas.width) {
+            //this.x = 0;
+            dx =- dx;
+        }
+
+        this.x += dx;
+        
+        this.y = this.y+30;
+        if (this.y > canvas.height) {
+            this.y = 0;
+        }
+    }
+
+    if (!fallDown){
+    return;
     }
 }
-} 
+
+/////////////////////////////////////////////////////////////////
+
+
 
     this.show = function() {
         if (lion2.x <= (this.x+80) && this.x <= (lion2.x+80) && lion2.y <= (this.y+80) && this.y <= (lion2.y+80)) { 
-
-  
-
 
             if (musicOn) {
                 music.pause();
@@ -1329,6 +1499,17 @@ function ani() {
         r3();
     }
 
+
+
+
+    if (textGo4) {
+        r4();
+    }
+
+
+
+
+
     if (!textGo) {
 
     playIns();
@@ -1405,6 +1586,14 @@ function ani() {
     }
 }
 
+if (round3) {
+    for (var i=0; i<noOfBones; i++) {
+       bon1[i].show();
+       bon1[i].right();
+   }
+
+}
+
     ///////////////////////////////////////////////////////////////////
 
 
@@ -1459,6 +1648,14 @@ function ani() {
      }
     }
 
+    if (round3) {
+        for (var i=0; i<noOfBanannas; i++) {
+           ban1[i].show();
+           ban1[i].right();
+    
+       }
+    }
+
      ///////////////////////////////////////////////////////////////////
 
  }
@@ -1480,6 +1677,10 @@ if (lion) {
             }
 
             if (round2) {
+                //leoCon.play();
+            }
+
+            if (round3) {
                 leoCon.play();
             }
 
@@ -1503,30 +1704,124 @@ if (lion) {
         ctx.fillText("found the treasure!", w, 400);
         ctx.font = "50px Comic Sans MS";
         ctx.fillStyle = "red";
+
+
         
 
+
+
+        if (round3) {
+            // fireworks
+            fireworksOn=true;
+
+            const max_fireworks = 1,
+            max_sparks = 1;
+            let fireworks = [];
+           
+          for (let i = 0; i < max_fireworks; i++) {
+            let firework = {
+              sparks: []
+            };
+            for (let n = 0; n < max_sparks; n++) {
+              let spark = {
+                vx: Math.random() * 5 + .5,
+                vy: Math.random() * 5 + .5,
+                weight: Math.random() * .3 + .03,
+                red: Math.floor(Math.random() * 2),
+                green: Math.floor(Math.random() * 2),
+                blue: Math.floor(Math.random() * 2)
+              };
+              if (Math.random() > .5) spark.vx = -spark.vx;
+              if (Math.random() > .5) spark.vy = -spark.vy;
+              firework.sparks.push(spark);
+            }
+            fireworks.push(firework);
+            resetFirework(firework);
+          }
+          window.requestAnimationFrame(explode);
+           
+          function resetFirework(firework) {
+            firework.x = Math.floor(Math.random() * canvas.width);
+            firework.y = canvas.height;
+            firework.age = 0;
+            firework.phase = 'fly';
+          }
+           
+          function explode() {
+            fireworks.forEach((firework,index) => {
+              if (firework.phase == 'explode') {
+                  firework.sparks.forEach((spark) => {
+                  for (let i = 0; i < 10; i++) {
+                    let trailAge = firework.age + i;
+                    let x = firework.x + spark.vx * trailAge;
+                    let y = firework.y + spark.vy * trailAge + spark.weight * trailAge * spark.weight * trailAge;
+                    let fade = i * 20 - firework.age * 2;
+                    let r = Math.floor(spark.red * fade);
+                    let g = Math.floor(spark.green * fade);
+                    let b = Math.floor(spark.blue * fade);
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',1)';
+                    ctx.rect(x, y, 4, 4);
+                    ctx.fill();
+                  }
+                });
+                firework.age++;
+                if (firework.age > 100 && Math.random() < .05) {
+                  fireEnd = resetFirework(firework);
+                }
+              } else {
+                firework.y = firework.y - 10;
+                for (let spark = 0; spark < 15; spark++) {
+                  ctx.beginPath();
+                  ctx.fillStyle = 'rgba(' + index * 50 + ',' + spark * 17 + ',0,1)';
+                  ctx.rect(firework.x + Math.random() * spark - spark / 2, firework.y + spark * 4, 4, 4);
+                  ctx.fill();
+                }
+                if (Math.random() < .001 || firework.y < 200) firework.phase = 'explode';
+              }
+            });
+            fireEnd = window.requestAnimationFrame(explode);
+
+        
+        }
+
+
+
+
+
+       } // end fireworks
+        
         if (round1) {
             ctx.fillText("Let's go to Round 2!", w, 500);
         }
 
         if (round2) {
+            ctx.fillText("Let's go the the final round!", w, 500);
+        }
+
+        if (round3) {
             ctx.fillText("Thanks for Playing!", w, 500);
         }
 
         ctx.fillStyle = "purple";
         
         if (round1) {
-        ctx.fillText("Press the Spacebar to Continue!", w, 600);
-        }
+            ctx.fillText("Press the Spacebar to Continue!", w, 600);
+            }
 
         if (round2) {
-        ctx.fillText("Press the Enter Key to Play Again!", w, 600);
-        }
+            ctx.fillText("Press the Enter Key to continue!", w, 600);
+            }
+
+        if (round3) {
+            ctx.fillText("Press the Enter Key to Play Again!", w, 600);
+            }  
 
         endOfLevel=false;
+    
+        end = false;
 
         
-        end = false;
         
 if (round1) {
     if (keys[32]) {
@@ -1537,7 +1832,6 @@ if (round1) {
         round2=true;
         textGo2=true;
         end=false;
-        endOfLevel=true;
         din=false;
         lion=false;
         levels1=false;
@@ -1551,14 +1845,41 @@ if (round1) {
         
     if (round2) {
         if (keys[13]) {
+
+        lion_Sd.pause();
+        leoCon.pause();
+        round1=false;
+        round2=false;
+        round3=true;
+        leoCon.currentTime = 0;
+        end=false;
+        endOfLevel=true;     
+        textGo3=false;
+        textGo4=true;
+        din=false;
+        lion=false;
+        levels1=false;
+        levels2=false;
+        levels3=true;
+        r4();
+        }
+    }
+
+    if (round4) {
+        if (keys[13]) {
         lion_Sd.pause();
         leoCon.pause();
         leoCon.currentTime = 0;
-        retToMain();
         endOfLevel=true;
+        round1=true;
+        round2=false;
+        round3=false;
+        round4=false;
+        fireworksOn=false;
+        cancelAnimationFrame(fireEnd);     
+        retToMain();
         }
-    }
-     
+    }   
 
 } else {
     ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
@@ -1571,13 +1892,19 @@ if (round1) {
            meat1[i].fall();
        }
     }
+
+    if (round3) {
+        for (var i=0; i<noOfMeats; i++) {
+           meat1[i].show();
+           meat1[i].right();
+           round4=true;
+       }
+    }
   
-       ///////////////////////////////////////////////////////////////////
 
  } 
 
 }
-
 
 }///textGo
 
@@ -1588,7 +1915,6 @@ if (round1) {
 }
 
 startAnimating(7);
-
 
 
 
