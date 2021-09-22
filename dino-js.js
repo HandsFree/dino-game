@@ -5,15 +5,13 @@ canvas.height = 735;
 
 var fireEnd;
 
-//var fireworksOn = false;
+var fireworksOn = false;
 
 var textGo2 = false; // round 2 instructions
 var textGo3 = false; // round 2 play
 var textGo4 = false;
 
 var endOfLevel=true; // false if white screen with text.
-
-var fireworksOn=false;
 
 var fallDown = true;
 
@@ -127,7 +125,7 @@ var Bearhit = new Audio("sounds/bear_hit.mp3");
 var Lionhit = new Audio("sounds/lion_hit.mp3");
 
 
-
+var fireWk = new Audio("sounds/fireworks.mp3");
 
 var leoR2 = new Audio("sounds/leo-round2.mp3");
 var rSpk2 = new Audio("sounds/RoundSk2.mp3");
@@ -1551,6 +1549,8 @@ function ani() {
         dinoCon.play();
         }
 
+        
+
 
         ctx.fillStyle = "white";
         ctx.globalAlpha = 0.6; 
@@ -1685,7 +1685,12 @@ if (lion) {
             }
 
         lion_Sd.play();
-        lion_Sd.volume = 0.3;
+        lion_Sd.volume = 0.2;
+
+        if (round3) {
+            lion_Sd.pause();
+            fireWk.play();
+        }
         
         }
 
@@ -1706,16 +1711,10 @@ if (lion) {
         ctx.fillStyle = "red";
 
 
-        
-
-
-
         if (round3) {
             // fireworks
-            fireworksOn=true;
-
             const max_fireworks = 1,
-            max_sparks = 1;
+            max_sparks = 2;
             let fireworks = [];
            
           for (let i = 0; i < max_fireworks; i++) {
@@ -1738,7 +1737,10 @@ if (lion) {
             fireworks.push(firework);
             resetFirework(firework);
           }
+
+          
           window.requestAnimationFrame(explode);
+          
            
           function resetFirework(firework) {
             firework.x = Math.floor(Math.random() * canvas.width);
@@ -1767,7 +1769,9 @@ if (lion) {
                 });
                 firework.age++;
                 if (firework.age > 100 && Math.random() < .05) {
-                  fireEnd = resetFirework(firework);
+                if (fireworks<2) {
+                  resetFirework(firework);
+                   }
                 }
               } else {
                 firework.y = firework.y - 10;
@@ -1780,16 +1784,12 @@ if (lion) {
                 if (Math.random() < .001 || firework.y < 200) firework.phase = 'explode';
               }
             });
+
             fireEnd = window.requestAnimationFrame(explode);
 
-        
-        }
+        } // end of fireworks
 
-
-
-
-
-       } // end fireworks
+       } // end round 3
         
         if (round1) {
             ctx.fillText("Let's go to Round 2!", w, 500);
@@ -1865,21 +1865,19 @@ if (round1) {
         }
     }
 
+
     if (round4) {
         if (keys[13]) {
+        //fireworksOn=false;
         lion_Sd.pause();
         leoCon.pause();
         leoCon.currentTime = 0;
-        endOfLevel=true;
-        round1=true;
-        round2=false;
-        round3=false;
-        round4=false;
-        fireworksOn=false;
-        cancelAnimationFrame(fireEnd);     
+        fireWk.pause();
         retToMain();
+        endOfLevel=true;
         }
-    }   
+    }
+
 
 } else {
     ctx.drawImage(sprites,tresureChest.chestX,tresureChest.chestY,200,100,tresureChest.dirChestX,tresureChest.dirChestY,180,120);
