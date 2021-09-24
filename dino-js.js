@@ -107,6 +107,12 @@ var tresureChest = {
 };
 
 /**********sound effects and music****************/
+
+var round2ef = new Audio("sounds/round2.mp3");
+var finalTime = new Audio("sounds/final-time.mp3");
+
+
+
 var startScTx = new Audio("sounds/startScTx.mp3");
 var startScMsc = new Audio("sounds/startScMsc.mp3");
 
@@ -298,7 +304,6 @@ function retToMain() {
 
 function r2() {
 
-
         ctx.clearRect(0,0,canvas.width, canvas.height);
 
         if (picOn) {
@@ -413,7 +418,7 @@ function r2() {
 
         if (speechOn) {
         music.pause();
-        escapeKey.play();
+        finalTime.play();
         }
 
         ctx.fillStyle = "white";
@@ -423,7 +428,7 @@ function r2() {
         ctx.fillStyle = "purple";
         ctx.textAlign = "center";
         ctx.font = "45px Comic Sans MS";
-        ctx.fillText("Dino is looking for the treasure!", w, 200);
+        ctx.fillText("Dino is looking for the treasure -", w, 200);
         ctx.fillText("for the final time!", w, 250);
         ctx.fillText("Dodge the bones from left to right", w, 350);
         ctx.fillText("Good Luck!", w, 450);
@@ -431,15 +436,16 @@ function r2() {
         ctx.fillStyle = "red";
         ctx.fillText("Escape Key to Play!", w, 550);
 
- 
-   
-
         if (keys[13]) {
 
-           /* if (speechOn) {
-            escapeKey.pause();
-            escapeKey.currentTime = 0;
-            }*/
+            if (speechOn) {
+                finalTime.pause();
+                finalTime.currentTime = 0;
+            }
+
+            if (musicOn) {
+                music.play();
+            }
 
             fallDown=true;
 
@@ -452,9 +458,6 @@ function r2() {
             textGo3=false;
             textGo4=false;
 
-
-
-            //startScMsc.pause();
             dino.x = 0;
             dino.y = 500;
             end=true;
@@ -466,9 +469,7 @@ function r2() {
             levels2=false;
             levels3=false;
             randNumGen();
-            endOfLevel=true;
-
-            
+            endOfLevel=true;         
 
         }
     }
@@ -1649,7 +1650,7 @@ if (lion) {
             }
 
             if (round2) {
-                //leoCon.play();
+                round2ef.play();
             }
 
             if (round3) {
@@ -1768,7 +1769,7 @@ if (lion) {
         }
 
         if (round2) {
-            ctx.fillText("Let's go the the final round!", w, 500);
+            ctx.fillText("Let's go to the final round!", w, 500);
         }
 
         if (round3) {
@@ -1836,19 +1837,19 @@ if (round1) {
         levels2=false;
         levels3=false;
 
-        //textGo=true;
         textGo2=false;
         textGo3=false;
         textGo4=true;
         ctx.clearRect(0,0,canvas.width, canvas.height);
         ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
-        //r4();
         }
     }
 
 
     if (round4) {
         if (keys[13]) {
+        round2ef.pause();
+        round2ef.currentTime = 0;
         lion_Sd.pause();
         leoCon.pause();
         leoCon.currentTime = 0;
