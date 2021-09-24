@@ -328,6 +328,7 @@ function r2() {
             rSpk2.currentTime = 0;
             round1=false;
             round2=true;
+            round3=false;
             textGo=true;
             textGo2=false;
             startScMsc.pause();
@@ -346,12 +347,7 @@ function r2() {
         }
     }
 
- 
-
-
-
     function r3() {
-
 
         ctx.clearRect(0,0,canvas.width, canvas.height);
 
@@ -377,8 +373,6 @@ function r2() {
         ctx.fillText("Escape Key to Play!", w, 500);
 
  
-   
-
         if (keys[13]) {
 
             if (speechOn) {
@@ -386,9 +380,6 @@ function r2() {
             escapeKey.currentTime = 0;
             }
 
-
-            round1=false;
-            round2=true;
             textGo=true;
             textGo2=false;
             textGo3=false;
@@ -409,12 +400,10 @@ function r2() {
     }
 
 
-
-
     function r4() {
-
-
-
+        endOfLevel=false;
+        fallDown=false;
+        din=false;
 
         ctx.clearRect(0,0,canvas.width, canvas.height);
 
@@ -452,6 +441,7 @@ function r2() {
             escapeKey.currentTime = 0;
             }*/
 
+            fallDown=true;
 
             round1=false;
             round2=false;
@@ -575,11 +565,8 @@ function bones1(x,y) {
     this.right = function() {
 
         if (fallDown) {
-
-            //this.x = this.x+10;
-        
+       
             if (this.x > canvas.width) {
-                //this.x = 0;
                 dx =- dx;
             }
 
@@ -632,7 +619,9 @@ function bones1(x,y) {
             ctx.font = "50px Comic Sans MS";
             ctx.fillStyle = "purple";
             ctx.fillText("Back you go!", w, 550);
-            ctx.fillText("Press the spacebar", w, 650);    
+            ctx.fillText("Press the spacebar", w, 650);
+            
+            
 
             if (keys[32]) { 
 
@@ -673,8 +662,6 @@ function bones1(x,y) {
                 
             lion_Sd.pause();
             leoCon.pause();
-            round1=false;
-            round2=true;
             textGo3=true;
             end=false;
             endOfLevel=true;
@@ -683,8 +670,9 @@ function bones1(x,y) {
             levels1=false;
             levels2=true;
             levels3=false;
-            endOfLevel=true;
         }
+
+    
 
 
 
@@ -822,10 +810,6 @@ function banannas1(x,y) {
                     }    
 
 
-
-
-            round1=false;
-            round2=true;
             textGo3=true;
             end=false;
             endOfLevel=true;
@@ -854,18 +838,10 @@ function banannas1(x,y) {
             meat1[i] = new meat10(x,y);
        }
 
-
-                round1=false;
-                round2=true;
-
                 end=false;
                 fallDown = true;
                 din=false;
-
-
-                boneOn=true;
-                
-          
+                boneOn=true;        
                 endOfLevel=true;   
                 
                 bearOn=true;
@@ -940,7 +916,6 @@ this.right = function() {
     if (fallDown) {
     
         if (this.x > canvas.width) {
-            //this.x = 0;
             dx =- dx;
         }
 
@@ -1012,8 +987,6 @@ this.right = function() {
                         music.play();
                     }  
 
-                round1=false;
-                round2=true;
                 meatOn=true;
                 endOfLevel=true;   
                 boneOn=true;
@@ -1041,8 +1014,6 @@ this.right = function() {
 
                 lion_Sd.pause();
                 leoCon.pause();
-                round1=false;
-                round2=true;
                 textGo3=true;
                 end=false;
                 endOfLevel=true;
@@ -1447,6 +1418,7 @@ function ani() {
 
         round1=true;
         round2=false;
+        round3=false;
 
         leoCon.pause();
         leoCon.currentTime = 0;
@@ -1785,7 +1757,7 @@ if (lion) {
               }
             });
 
-            fireEnd = window.requestAnimationFrame(explode);
+            window.requestAnimationFrame(explode);
 
         } // end of fireworks
 
@@ -1830,6 +1802,7 @@ if (round1) {
         leoR2.currentTime = 0;
         round1=false;
         round2=true;
+        round3=false;
         textGo2=true;
         end=false;
         din=false;
@@ -1846,6 +1819,7 @@ if (round1) {
     if (round2) {
         if (keys[13]) {
 
+
         lion_Sd.pause();
         leoCon.pause();
         round1=false;
@@ -1853,22 +1827,28 @@ if (round1) {
         round3=true;
         leoCon.currentTime = 0;
         end=false;
-        endOfLevel=true;     
+        endOfLevel=true;   
+        din=true;
+        lion=false;
+        billyBear=false;
+
+        levels1=true;
+        levels2=false;
+        levels3=false;
+
+        //textGo=true;
+        textGo2=false;
         textGo3=false;
         textGo4=true;
-        din=false;
-        lion=false;
-        levels1=false;
-        levels2=false;
-        levels3=true;
-        r4();
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        ctx.drawImage(lev1, 0, 0, canvas.width, canvas.height);
+        //r4();
         }
     }
 
 
     if (round4) {
         if (keys[13]) {
-        //fireworksOn=false;
         lion_Sd.pause();
         leoCon.pause();
         leoCon.currentTime = 0;
