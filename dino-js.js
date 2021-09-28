@@ -1820,7 +1820,8 @@ if (round1) {
     if (round2) {
         if (keys[13]) {
 
-
+        round2ef.pause();
+        round2ef.currentTime = 0;
         lion_Sd.pause();
         leoCon.pause();
         round1=false;
