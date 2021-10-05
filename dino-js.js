@@ -109,11 +109,11 @@ var tresureChest = {
 /**********sound effects and music****************/
 
 var round2ef = new Audio("sounds/round2.mp3");
-var finalTime = new Audio("sounds/final-time.mp3");
+var finalTime = new Audio("sounds/finalTime.mp3");
 
 
 
-var startScTx = new Audio("sounds/startScTx.mp3");
+var startScTx = new Audio("sounds/start-2-sp.mp3");
 var startScMsc = new Audio("sounds/startScMsc.mp3");
 
 var dinoCon = new Audio("sounds/dinoCon.mp3");
@@ -134,9 +134,10 @@ var Lionhit = new Audio("sounds/lion_hit.mp3");
 var fireWk = new Audio("sounds/fireworks.mp3");
 
 var leoR2 = new Audio("sounds/leo-round2.mp3");
-var rSpk2 = new Audio("sounds/RoundSk2.mp3");
+var rSpk2 = new Audio("sounds/round2Sp.mp3");
 
-var escapeKey = new Audio("sounds/escape_key.mp3");
+var enterKey = new Audio("sounds/enter_key.mp3");
+var letsGo = new Audio("sounds/lets-go.mp3");
 
 var ins = new Audio("sounds/ins.mp3");
 var roarSd = new Audio("sounds/T-Rex1.mp3");
@@ -326,7 +327,7 @@ function r2() {
         ctx.fillText("You have to dodge the bones now!", w, 300);
         ctx.fillText("Good Luck!", w, 400);
         ctx.fillStyle = "red";
-        ctx.fillText("Press the Escape Key to Play!", w, 500);
+        ctx.fillText("Press the Enter Key to Play!", w, 500);
 
         if (keys[13]) {
             rSpk2.pause();
@@ -362,7 +363,7 @@ function r2() {
 
         if (speechOn) {
         music.pause();
-        escapeKey.play();
+        letsGo.play();
         }
 
         ctx.fillStyle = "white";
@@ -375,14 +376,14 @@ function r2() {
         ctx.fillText("Let's Go!", w, 300);
         ctx.font = "bolder 30px Comic Sans MS";
         ctx.fillStyle = "red";
-        ctx.fillText("Escape Key to Play!", w, 500);
+        ctx.fillText("Enter Key to Play!", w, 500);
 
  
         if (keys[13]) {
 
             if (speechOn) {
-            escapeKey.pause();
-            escapeKey.currentTime = 0;
+            letsGo.pause();
+            letsGo.currentTime = 0;
             }
 
             textGo=true;
@@ -434,7 +435,7 @@ function r2() {
         ctx.fillText("Good Luck!", w, 450);
         ctx.font = "bolder 30px Comic Sans MS";
         ctx.fillStyle = "red";
-        ctx.fillText("Escape Key to Play!", w, 550);
+        ctx.fillText("Enter Key to Play!", w, 550);
 
         if (keys[13]) {
 
@@ -1415,7 +1416,7 @@ function ani() {
 
         } else {
 
-        ctx.fillText("Press the Escape Key to continue!", w, 680);
+        ctx.fillText("Press the Enter Key to continue!", w, 680);
 
         round1=true;
         round2=false;
